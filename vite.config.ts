@@ -18,19 +18,19 @@ export default defineConfig({
     resolve: {
         alias: {
             '@':
-            new URL('./src', import.meta.url).path,
+                fileURLToPath(new URL('./src', import.meta.url)),
             '@assets':
-            new URL('./src/assets', import.meta.url).path,
+                fileURLToPath(new URL('./src/assets', import.meta.url)),
             '@config':
-            new URL('./src/config', import.meta.url).path,
+                fileURLToPath(new URL('./src/config', import.meta.url)),
             '@pages':
-            new URL('./src/pages', import.meta.url).path,
-            '@layout':
-            new URL('./src/portal', import.meta.url).path,
+                fileURLToPath(new URL('./src/pages', import.meta.url)),
+            '@layouts':
+                fileURLToPath(new URL('./src/layouts', import.meta.url)),
             '@utils':
-            new URL('./src/portal/hooks', import.meta.url).path,
+                fileURLToPath(new URL('./src/portal/hooks', import.meta.url)),
             '@static':
-            new URL('/', import.meta.url).path,
+                fileURLToPath(new URL('/', import.meta.url)),
         }
     }
 })

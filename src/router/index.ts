@@ -1,9 +1,9 @@
 import {createRouter, createWebHistory} from "vue-router";
 import routes from "./routes";
 
-let index = createRouter({
+const index = createRouter({
     history: createWebHistory(),
-    routes: routes,
+    routes,
 })
 
 

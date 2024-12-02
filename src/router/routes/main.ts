@@ -2,7 +2,10 @@
 
 import {RouteRecordRaw} from "vue-router";
 
-export default {
+const mainRoutes : RouteRecordRaw = {
+    component: () => import('@layouts/main.vue'),
+    name: 'main-layout',
+    path: "/",
     children: [
         {
             component: () => import('@pages/main/home.vue'),
@@ -26,7 +29,6 @@ export default {
             path: "setting",
         }
     ],
-    component: () => import('@layouts/main.vue'),
-    name: 'main-layout',
-    path: "/",
-} as RouteRecordRaw
+}
+
+export default mainRoutes;

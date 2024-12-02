@@ -2,8 +2,9 @@
 import ChannelList from "@/components/channel/channel-list.vue";
 import ChannelDetail from "@/components/channel/channel-detail.vue";
 import HomeCard from "@/components/home/home-card.vue";
+import { ref } from "vue";
 
-const channelSelected = ref<{}>()
+const channelSelected = ref<{id: number}>()
 </script>
 
 <template>

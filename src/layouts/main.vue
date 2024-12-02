@@ -11,7 +11,8 @@ import Sidebar from "@/components/layout/sidebar.vue";
 </template>
 
 <style scoped>
-@layer component {
+@tailwind components;
+@layer components {
 	.layout {
 		@apply min-h-[100vh] flex flex-row
 	}

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 const channels = ref([
 	{
 		id: 1,
@@ -78,6 +80,8 @@ const selected = defineModel<{ id: number }>("selectedChannel")
 </template>
 
 <style scoped lang="scss">
+@import '/src/style.css';
+
 @tailwind components;
 @layer components {
 	.channel-list-component {

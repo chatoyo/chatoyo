@@ -8,7 +8,7 @@ export default defineConfig({
     plugins: [
         vue(),
         AutoImport({
-            imports: ['vue'],
+            // imports: ['vue'],
             eslintrc: {
                 enabled: true, // <-- this
             },

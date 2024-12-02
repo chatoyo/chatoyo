@@ -28,7 +28,7 @@ export default defineConfig({
             '@layouts':
                 fileURLToPath(new URL('./src/layouts', import.meta.url)),
             '@utils':
-                fileURLToPath(new URL('./src/portal/hooks', import.meta.url)),
+                fileURLToPath(new URL('./src/utils', import.meta.url)),
             '@static':
                 fileURLToPath(new URL('/', import.meta.url)),
         }

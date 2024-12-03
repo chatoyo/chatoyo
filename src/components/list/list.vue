@@ -8,13 +8,17 @@ const props = defineProps<
 
 
 const selected = defineModel<{ id: number }>("selectedChannel")
+
+const imageErrorHandler = (event: Event) => {
+	event.target.src = '/images/network.svg'
+}
 </script>
 
 <template>
 <div class="channel-list-component">
 	<div class="title flex gap-2 items-baseline select-none">
 		<span class="text-xl font-bold text-emerald-400">{{ props.title }}</span>
-		<span class="text-md font-bold text-emerald-400">{{props.subtitle}}</span>
+		<span class="text-md font-bold text-emerald-400">{{ props.subtitle }}</span>
 		<button
 			v-if="selected"
 			@click="selected=undefined"
@@ -31,9 +35,11 @@ const selected = defineModel<{ id: number }>("selectedChannel")
 		    @click="selected=item"
 		>
 			<div class="shrink-0">
-				<a href="#" class="relative flex items-center justify-center w-10 h-10 text-white rounded-full">
-					<img :src="item.pic" alt="user name" title="user name" width="40" height="40"
-					     class="max-w-full rounded-full"/>
+				<a href="#" class="relative flex items-center justify-center w-10 h-10 rounded-full">
+					<img :src="item.pic" width="40" height="40"
+					     class="max-w-full rounded-full"
+					     @error="imageErrorHandler"
+					/>
 					<span
 						class="absolute -bottom-0.5 -right-0.5 inline-flex items-center justify-center gap-1 rounded-full border-2 border-white bg-pink-500 p-1 text-sm text-white">
 						<span class="sr-only"> offline </span>

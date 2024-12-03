@@ -15,7 +15,7 @@ const message = ref([
 		description: "你说得对，但是你说得对",
 		pic: 'https://webstatic.mihoyo.com/upload/op-public/2021/10/09/870472d6104dbbe7ea18b27c13763ccb_5300916022261002498.png'
 	},
-])
+]);
 </script>
 
 <template>

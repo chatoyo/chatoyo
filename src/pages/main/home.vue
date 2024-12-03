@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import ChannelList from "@components/list/list.vue";
-import ChannelDetail from "@/components/channel/channel-detail.vue";
+import ChannelDetail, { Channel } from "@/components/channel/channel-detail.vue";
 import HomeCard from "@/components/home/home-card.vue";
 import {ref} from "vue";
+import { ChannelMessage } from "@/components/chat/chat-message.vue";
 
-const channelSelected = ref<{ id: number }>()
+const channelSelected = ref<Channel | undefined>(undefined);
 
-const chatLog = ref([
+const chatLog = ref<Array<ChannelMessage>>([
 	{
 		content: '你好，我是西风骑士团团长，琴·古恩希尔德。叫我琴就好',
 		avatar: 'https://patchwiki.biligame.com/images/ys/8/8d/lm9cpnooekvfzfy7fbogykwjro3v5lw.png',
@@ -23,9 +24,9 @@ const chatLog = ref([
 		avatar: 'https://patchwiki.biligame.com/images/ys/2/26/59ohlo0p92xb8d7qut9ul8wi0ij6ehw.png',
 		status: "", self: false
 	},
-])
+]);
 
-const channels = ref([
+const channels = ref<Array<Channel>>([
 	{
 		id: 1,
 		title: '原神项目组',
@@ -57,7 +58,7 @@ const channels = ref([
 		description: "你说得对，但是你说得对",
 		pic: 'https://webstatic.mihoyo.com/upload/op-public/2021/10/03/a103c80cb895bfdfb7496f4233b63158_8329011972047580487.png'
 	},
-])
+]);
 </script>
 
 <template>
@@ -68,7 +69,7 @@ const channels = ref([
 	              title="频道"
 	              subtitle="Channel"/>
 	<div class="main-container">
-		<channel-detail v-if="channelSelected" :channel="channelSelected" :message="chatLog"/>
+		<channel-detail v-if="channelSelected" :channel="channelSelected" :messages="chatLog"/>
 		<home-card v-else/>
 	</div>
 </div>

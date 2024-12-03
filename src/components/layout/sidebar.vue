@@ -1,40 +1,50 @@
 <script setup lang="ts">
 import SidebarMenu from "@assets/sidebar-menu.ts"
 import {icon} from "@/utils/transcript.ts";
-
 import {useRoute, useRouter} from "vue-router";
+
+type SidebarProps = {
+	avatar?: string
+}
+
+const props = withDefaults(
+	defineProps<SidebarProps>(),
+	{
+		avatar: "/images/avatar-test.jpg"
+	}
+);
 
 const router = useRouter()
 const route = useRoute()
 
-const iconWithStyle = (iconName: string): string[] => [icon(iconName)]
-const navStyle = (itemRoute: string): {} => ({
-	'active-item': currentRoute(itemRoute)
-})
+const iconWithStyle = (iconName: string): string[] => [icon(iconName)];
+const isActive = (itemRoute: string): {} => ({
+	'active-item': isCurrentRoute(itemRoute)
+});
 
-const currentRoute = (itemRoute: string) => route.name === itemRoute
+const isCurrentRoute = (itemRoute: string) => route.name === itemRoute;
+
+const handleClick = (target: string) => {
+	router.push({name: target})
+}
 </script>
 
 <template>
-<div class="sidebar">
-	<div class="logo"
-	     @click="router.push({name:'home'})">
-		ChatoYo
+	<div class="sidebar">
+		<div class="logo" @click="handleClick('home')">
+			ChatoYo
+		</div>
+		<div class="avatar" :class="isActive('setting')" @click="handleClick('setting')">
+			<img class="avatar-img" :src="props.avatar" />
+		</div>
+
+		<ul class="nav-container">
+			<li class="nav" :class="isActive(item.target)" v-for="(item,index) in SidebarMenu" :key="index"
+				@click="handleClick(item.target)">
+				<span :class="iconWithStyle(item.icon)" class="text-2xl" />
+			</li>
+		</ul>
 	</div>
-	<div class="avatar" :class="navStyle('setting')" @click="router.push({name:'setting'})">
-		<img class="avatar-img" src="/images/avatar-test.jpg"/>
-	</div>
-	
-	<ul class="nav-container">
-		<li class="nav"
-		    :class="navStyle(item.target)"
-		    v-for="(item,index) in SidebarMenu" :key="index"
-		    @click="router.push({name:item.target})">
-			<span :class="iconWithStyle(item.icon)"
-			      class="text-2xl"/>
-		</li>
-	</ul>
-</div>
 </template>
 
 <style scoped lang="scss">

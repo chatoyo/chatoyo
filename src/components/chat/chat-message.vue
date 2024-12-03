@@ -1,10 +1,21 @@
 <script setup lang="ts">
-const props = defineProps<{ message: [] }>()
+export type ChannelMessage = {
+	self: boolean,
+	content: string,
+	avatar: string,
+	status: string
+}
+
+type ChannelMessageProps = {
+	messages: Array<ChannelMessage>
+}
+
+const props = defineProps<ChannelMessageProps>();
 </script>
 
 <template>
 <ul class="message-box">
-	<li class="message" v-for="(item,index) in props.message" :key="index">
+	<li class="message" v-for="(item,index) in props.messages" :key="index">
 		<div class="self" v-if="item.self">
 			<div class="inline-flex flex-col justify-end">
 				

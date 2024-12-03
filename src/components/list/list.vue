@@ -1,16 +1,23 @@
 <script setup lang="ts">
+import { Channel } from '../channel/channel-detail.vue';
 
 
-const props = defineProps<
-	{
-		title: string, subtitle: string, data: []
-	}>()
+type ListProps = {
+	title: string,
+	subtitle: string, 
+	data: Array<any>
+}
+
+const props = defineProps<ListProps>();
 
 
-const selected = defineModel<{ id: number }>("selectedChannel")
+const selected = defineModel<Channel>("selectedChannel");
 
 const imageErrorHandler = (event: Event) => {
-	event.target.src = '/images/network.svg'
+	if(event.target){
+		const imgTarget = event.target as HTMLImageElement;
+		imgTarget.src = '/images/network.svg'
+	}
 }
 </script>
 

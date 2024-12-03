@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import DetailHeader from "@components/channel/detail/detail-header.vue";
-import ChatMessage from "@components/chat/chat-message.vue";
+import ChatMessage, { ChannelMessage } from "@components/chat/chat-message.vue";
 
-interface ChannelDetailProp {
-	channel: {},
-	message: []
+export type Channel = {
+	id: number,
+	title: string,
+	description: string,
+	pic: string
 }
 
-const props = withDefaults(defineProps<ChannelDetailProp>(), {
-	channel: undefined
-})
+type ChannelDetailProps = {
+	channel: Channel,
+	messages: Array<ChannelMessage>
+}
+
+const props = defineProps<ChannelDetailProps>();
 
 
 </script>
@@ -21,7 +26,7 @@ const props = withDefaults(defineProps<ChannelDetailProp>(), {
 	</div>
 	
 	<div class="chat-content">
-		<chat-message :message="props.message"/>
+		<chat-message :messages="props.messages"/>
 	</div>
 </div>
 </template>

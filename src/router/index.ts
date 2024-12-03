@@ -9,7 +9,7 @@ const index = createRouter({
 
 index.beforeEach((to, _from, next) => {
     if (to.meta.title) {
-        document.title = to.meta.title.toString();
+        document.title = to.meta.title as string;
     }
     next()
 })

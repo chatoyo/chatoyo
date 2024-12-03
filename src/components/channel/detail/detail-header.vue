@@ -1,10 +1,10 @@
 <script setup lang="ts">
-interface ChannelDetailHeaderProp {
-	title: '',
-	pic: ''
+export type ChannelDetailHeaderProps = {
+	title: string,
+	pic: string
 }
 
-const props = defineProps<ChannelDetailHeaderProp>()
+const props = defineProps<ChannelDetailHeaderProps>();
 </script>
 
 <template>

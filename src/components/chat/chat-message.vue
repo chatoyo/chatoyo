@@ -1,10 +1,5 @@
 <script setup lang="ts">
-export type ChannelMessage = {
-	self: boolean,
-	content: string,
-	avatar: string,
-	status: string
-}
+import {ChannelMessage} from "@/models/chat-message.ts";
 
 type ChannelMessageProps = {
 	messages: Array<ChannelMessage>

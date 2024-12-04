@@ -1,20 +1,19 @@
 <script setup lang="ts">
-import { Channel } from '../channel/channel-detail.vue';
 
+import {List} from "@/models";
 
-type ListProps = {
+type ListProp = {
 	title: string,
-	subtitle: string, 
-	data: Array<any>
+	subtitle: string,
+	data: Array<List>
 }
 
-const props = defineProps<ListProps>();
+const props = defineProps<ListProp>();
 
-
-const selected = defineModel<Channel>("selectedChannel");
+const selected = defineModel<List>("selected");
 
 const imageErrorHandler = (event: Event) => {
-	if(event.target){
+	if (event.target) {
 		const imgTarget = event.target as HTMLImageElement;
 		imgTarget.src = '/images/network.svg'
 	}
@@ -23,14 +22,14 @@ const imageErrorHandler = (event: Event) => {
 
 <template>
 <div class="channel-list-component">
-	<div class="title flex gap-2 items-baseline select-none">
+	<div class="title flex gap-2 items-baseline select-none h-12">
 		<span class="text-xl font-bold text-emerald-400">{{ props.title }}</span>
 		<span class="text-md font-bold text-emerald-400">{{ props.subtitle }}</span>
 		<button
 			v-if="selected"
 			@click="selected=undefined"
 			class="ml-auto inline-flex items-center justify-center h-8 gap-2 px-4 text-xs font-medium tracking-wide text-white transition duration-300 rounded shadow-md focus-visible:outline-none justify-self-center whitespace-nowrap bg-emerald-500 shadow-emerald-200 hover:bg-emerald-600 hover:shadow-sm hover:shadow-emerald-200 focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200 disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none">
-			<span> &lt; </span>
+			<span class="pi pi-angle-left"/>
 		</button>
 	</div>
 	
@@ -45,6 +44,7 @@ const imageErrorHandler = (event: Event) => {
 				<a href="#" class="relative flex items-center justify-center w-10 h-10 rounded-full">
 					<img :src="item.pic" width="40" height="40"
 					     class="max-w-full rounded-full"
+					     alt=""
 					     @error="imageErrorHandler"
 					/>
 					<span

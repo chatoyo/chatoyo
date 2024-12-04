@@ -1,9 +1,10 @@
-<script setup lang="ts">
+<script setup
+        lang="ts">
 import {ref} from "vue";
-import List from "@components/list/list.vue";
+import MessageList from "@components/list/list.vue";
+import {List} from '@/models'
 
-
-const message = ref([
+const message = ref<List[]>([
 	{
 		id: 1,
 		title: '刘伟',
@@ -20,7 +21,10 @@ const message = ref([
 
 <template>
 <div class="message-center">
-	<list :data="message" title="消息中心" subtitle="Message Center" class="w-[20rem]"/>
+	<message-list :data="message"
+	              title="消息中心"
+	              subtitle="Message Center"
+	              class="w-[20rem]"/>
 </div>
 </template>
 

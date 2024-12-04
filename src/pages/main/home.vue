@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import ChannelList from "@components/list/list.vue";
-import ChannelDetail, { Channel } from "@/components/channel/channel-detail.vue";
+import ChannelDetail from "@/components/channel/channel-detail.vue";
 import HomeCard from "@/components/home/home-card.vue";
 import {ref} from "vue";
-import { ChannelMessage } from "@/components/chat/chat-message.vue";
+
+import {Channel, ChannelMessage} from "@/models";
 
 const channelSelected = ref<Channel | undefined>(undefined);
 
@@ -64,7 +65,7 @@ const channels = ref<Array<Channel>>([
 <template>
 <div class="home-page flex flex-row w-full">
 	<channel-list class="w-[20rem]"
-	              v-model:selected-channel="channelSelected"
+	              v-model:selected="channelSelected"
 	              :data="channels"
 	              title="频道"
 	              subtitle="Channel"/>

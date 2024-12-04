@@ -27,7 +27,6 @@ const showChannels = () => {
 };
 
 const selectChannel = (channel: Channel) => {
-  console.log(channel);
   state.selectedChannel = channel;
   state.displayState = 'chat';
 };

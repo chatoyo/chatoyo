@@ -1,6 +1,5 @@
-import {RouteRecordRaw} from "vue-router";
-import main from "./main.ts"
+import { RouteRecordRaw } from 'vue-router';
+import mainRoutes from './main.ts';
+import loginRoutes from './login.ts';
 
-export default [
-    main
-] as RouteRecordRaw[]
+export default [mainRoutes, loginRoutes] as RouteRecordRaw[];

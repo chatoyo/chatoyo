@@ -2,9 +2,9 @@
         lang="ts">
 import {ref} from "vue";
 import MessageList from "@components/list/list.vue";
-import {List} from '@/models'
+import {ListChannelItem} from '@/models'
 
-const message = ref<List[]>([
+const message = ref<ListChannelItem[]>([
 	{
 		id: 1,
 		title: '刘伟',

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { List } from '@/models';
+import { ListChannelItem } from '@/models';
 
 type ListProp = {
   title: string;
   subtitle: string;
-  data: Array<List>;
+  data: Array<ListChannelItem>;
 };
 
 type ListEmit = {
@@ -13,7 +13,7 @@ type ListEmit = {
 
 const props = defineProps<ListProp>();
 const emits = defineEmits<ListEmit>();
-const selected = defineModel<List>('selected');
+const selected = defineModel<ListChannelItem>('selected');
 
 const imageErrorHandler = (event: Event) => {
   if (event.target) {

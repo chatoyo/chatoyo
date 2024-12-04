@@ -1,10 +1,10 @@
-export interface List {
+export interface ListChannelItem {
 	id: number,
 	title: string,
 	description: string,
 	pic: string
 }
 
-export interface Channel extends List {
+export interface Channel extends ListChannelItem {
 	status?: string
 }

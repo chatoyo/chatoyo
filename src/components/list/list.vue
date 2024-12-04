@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import { ListChannelItem } from '@/models';
+import { Channel, ListChannelItem } from '@/models';
 
 type ListProp = {
   title: string;
   subtitle: string;
   data: Array<ListChannelItem>;
+  selected: Channel | undefined;
 };
 
 type ListEmit = {
   (e: 'backHome'): void;
+  (e: 'selectChannel', newChannel: Channel): void;
 };
 
 const props = defineProps<ListProp>();
 const emits = defineEmits<ListEmit>();
-const selected = defineModel<ListChannelItem>('selected');
 
 const imageErrorHandler = (event: Event) => {
   if (event.target) {
@@ -21,10 +22,12 @@ const imageErrorHandler = (event: Event) => {
     imgTarget.src = '/images/network.svg';
   }
 };
-const exitButtonClickHandler = () => {
-  if (!selected.value) emits('backHome'); // 响应式：让对应页面取消显示列表
-  else selected.value = undefined;
+const onExitButtonClick = () => {
+  emits('backHome'); // 响应式：让对应页面取消显示列表
 };
+const onSelectChannel = (newChannel: Channel) => {
+  emits('selectChannel', newChannel);
+}
 </script>
 
 <template>
@@ -47,7 +50,7 @@ const exitButtonClickHandler = () => {
         :class="{ selected: selected?.id === item.id }"
         v-for="(item, index) in props.data"
         :key="index"
-        @click="selected = item"
+        @click="onSelectChannel(item)"
       >
         <div class="shrink-0">
           <a href="#" class="relative flex items-center justify-center w-10 h-10 rounded-full">

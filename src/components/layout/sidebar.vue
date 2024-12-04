@@ -52,7 +52,7 @@ const handleClick = (target: string) => {
 @layer components {
   .sidebar {
     @apply bg-[#04263E] w-screen h-[4.5rem] flex px-2 flex-row items-center gap-8
-		md:flex-col md:h-full md:py-8 md:w-28 md:px-0;
+		md:flex-col md:h-full md:py-8 md:w-28 md:px-0 overflow-clip;
   }
 
   .logo {
@@ -61,14 +61,17 @@ const handleClick = (target: string) => {
   }
 
   .avatar {
-    @apply hidden justify-center items-center h-16 w-fit cursor-pointer py-2 rounded-md
-		md:w-full md:inline-flex
+    @apply hidden justify-center items-center h-16 w-fit cursor-pointer py-2 rounded-full
+		md:w-16 md:inline-flex
 		hover:bg-slate-300/50
 		transition-all duration-300;
 
     &.active-item {
-      @apply bg-emerald-500 hover:text-white hover:bg-emerald-500
-			md:px-0 md:w-full;
+      @apply bg-emerald-500 hover:text-white hover:bg-emerald-500 rounded-none
+			md:px-0;
+      @media (min-width: 768px) {
+          width: 140%;
+        }
       /*应该清除和未选中状态下互斥的样式*/
     }
 
@@ -87,17 +90,20 @@ const handleClick = (target: string) => {
 
   .nav-container {
     @apply flex flex-row w-full justify-between
-		md:flex-col md:gap-2 md:justify-center;
+		md:flex-col md:gap-2 md:justify-center items-center;
 
     .nav {
-      @apply text-white py-4 px-12 cursor-pointer transition-all duration-300 rounded-md inline-flex justify-center
-			md:px-6
+      @apply text-white py-4 px-12 cursor-pointer transition-all duration-300 rounded-full inline-flex justify-center items-center
+			md:px-6 md:h-16 md:w-16
 			dark:text-white
 			hover:text-emerald-500 hover:bg-slate-300/50;
 
       &.active-item {
-        @apply bg-emerald-500 hover:text-white hover:bg-emerald-500
-				md:px-0 md:w-full;
+        @apply bg-emerald-500 hover:text-white hover:bg-emerald-500 rounded-none
+				md:px-0;
+        @media (min-width: 768px) {
+          width: 140%;
+        }
         /*应该清除和未选中状态下互斥的样式*/
       }
     }

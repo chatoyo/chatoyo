@@ -14,6 +14,7 @@ import router from "./router";
 const pinia = createPinia()
 
 // Instance declarations
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 const instance = createApp(App)
 instance.use(pinia)
 instance.use(router)

@@ -36,7 +36,7 @@ const onSelectChannel = (newChannel: Channel) => {
       <span class="text-xl font-bold text-emerald-400">{{ props.title }}</span>
       <span class="text-md font-bold text-emerald-400">{{ props.subtitle }}</span>
       <button
-        @click="exitButtonClickHandler"
+        @click="onExitButtonClick"
         :class="{ 'md:hidden': !selected }"
         class="ml-auto inline-flex items-center justify-center h-8 gap-2 px-4 text-xs font-medium tracking-wide text-white transition duration-300 rounded shadow-md focus-visible:outline-none justify-self-center whitespace-nowrap bg-emerald-500 shadow-emerald-200 hover:bg-emerald-600 hover:shadow-sm hover:shadow-emerald-200 focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200 disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none"
       >

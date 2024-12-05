@@ -17,7 +17,6 @@ const state = reactive({
 });
 
 const navigateHome = () => {
-  console.log('home!');
   state.selectedChannel = undefined;
   state.displayState = 'home';
 };
@@ -45,7 +44,7 @@ const selectChannel = (channel: Channel) => {
       />
     </div>
 
-    <div class="main-container" :class="{ hidden: state.displayState !== 'chat' }">
+    <div class="main-container" :class="{ hidden: state.displayState === 'channels' } /** Shows Homecard or Chatlog */">
       <channel-detail v-if="state.selectedChannel" :channel="state.selectedChannel" :messages="chatLog" />
       <home-card v-else />
       <div class="md:hidden" @click="showChannels">打开频道列表</div>

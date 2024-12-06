@@ -7,11 +7,10 @@ import './style.css';
 import 'primeicons/primeicons.css';
 
 // Dependencies
-import { createPinia } from 'pinia';
+import pinia from './store';
 import router from './router';
 
 // Dependency injection
-const pinia = createPinia();
 
 // Instance declarations
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

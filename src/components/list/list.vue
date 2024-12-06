@@ -9,7 +9,7 @@ type ListProp = {
 };
 
 type ListEmit = {
-  (e: 'backHome'): void;
+  (e: 'navigateHome'): void;
   (e: 'selectChannel', newChannel: Channel): void;
 };
 
@@ -22,29 +22,27 @@ const imageErrorHandler = (event: Event) => {
     imgTarget.src = '/images/network.svg';
   }
 };
+
 const onExitButtonClick = () => {
-  emits('backHome'); // 响应式：让对应页面取消显示列表
+  emits('navigateHome'); // 响应式：让对应页面取消显示列表
 };
+
 const onSelectChannel = (newChannel: Channel) => {
   emits('selectChannel', newChannel);
-}
+};
 </script>
 
 <template>
   <div class="channel-list-component">
-    <div class="title flex gap-2 items-baseline select-none h-12">
-      <span class="text-xl font-bold text-emerald-400">{{ props.title }}</span>
-      <span class="text-md font-bold text-emerald-400">{{ props.subtitle }}</span>
-      <button
-        @click="onExitButtonClick"
-        :class="{ 'md:hidden': !selected }"
-        class="ml-auto inline-flex items-center justify-center h-8 gap-2 px-4 text-xs font-medium tracking-wide text-white transition duration-300 rounded shadow-md focus-visible:outline-none justify-self-center whitespace-nowrap bg-emerald-500 shadow-emerald-200 hover:bg-emerald-600 hover:shadow-sm hover:shadow-emerald-200 focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200 disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none"
-      >
+    <div class="header">
+      <span class="text-xl">{{ props.title }}</span>
+      <span class="text-md">{{ props.subtitle }}</span>
+      <button @click="onExitButtonClick" :class="{ 'md:!hidden': !selected }" class="btn-back">
         <span class="pi pi-angle-left" />
       </button>
     </div>
 
-    <ul class="divide-y divide-slate-100">
+    <ul class="divide-y divide-slate-500 dark:divide-slate-100">
       <li
         class="channel-item"
         :class="{ selected: selected?.id === item.id }"
@@ -70,7 +68,7 @@ const onSelectChannel = (newChannel: Channel) => {
           </a>
         </div>
         <div class="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full min-w-0">
-          <h4 class="text-base text-slate-100">{{ item.title }}</h4>
+          <h4 class="text-base text-slate-900 dark:text-slate-100">{{ item.title }}</h4>
           <p class="description">{{ item.description }}</p>
         </div>
       </li>
@@ -84,19 +82,37 @@ const onSelectChannel = (newChannel: Channel) => {
 @tailwind components;
 @layer components {
   .channel-list-component {
-    @apply bg-[#184183] px-4 py-8 flex flex-col gap-4 h-full;
+    @apply px-4 py-8 flex flex-col gap-4 h-full duration-300
+		bg-sunrise-white dark:bg-ultramarine-500;
+  }
+
+  .header {
+    @apply flex gap-2 items-baseline select-none h-12 font-sans font-bold
+		text-lotus dark:text-emerald-400;
+  }
+
+  .btn-back {
+    @apply ml-auto inline-flex items-center justify-center h-8 gap-2 px-4 text-xs font-medium tracking-wide text-white
+		transition duration-300 rounded shadow-md justify-self-center whitespace-nowrap
+		hover:shadow-sm
+    bg-purple-600 hover:bg-lotus hover:shadow-lotus/80
+		dark:bg-emerald-500 dark:shadow-emerald-200
+		dark:hover:bg-emerald-600 dark:hover:shadow-emerald-200
+		focus-visible:outline-none focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200
+		disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none;
   }
 
   .channel-item {
     @apply flex items-center gap-4 px-4 py-3 select-none cursor-pointer
-		hover:bg-slate-300/20 transition-all duration-300;
+		hover:bg-lotus/10 dark:hover:bg-slate-300/20
+		transition-all duration-300;
 
     .description {
       @apply w-full text-sm truncate text-slate-400;
     }
 
     &.selected {
-      @apply bg-sky-200/30;
+      @apply bg-violet-300/50 dark:bg-sky-200/30;
 
       .description {
         @apply text-slate-800;

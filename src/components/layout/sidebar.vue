@@ -2,6 +2,8 @@
 import SidebarMenu from '@assets/sidebar-menu.ts';
 import { icon } from '@/utils/transcript.ts';
 import { useRoute, useRouter } from 'vue-router';
+import { computed } from 'vue';
+import { useLayoutStore } from '@/store';
 
 type SidebarProps = {
   avatar?: string;
@@ -13,6 +15,7 @@ const props = withDefaults(defineProps<SidebarProps>(), {
 
 const router = useRouter();
 const route = useRoute();
+const layoutStore = useLayoutStore();
 
 const iconWithStyle = (iconName: string): string[] => [icon(iconName)];
 const isActive = (itemRoute: string): {} => ({
@@ -24,6 +27,8 @@ const isCurrentRoute = (itemRoute: string) => route.name === itemRoute;
 const handleClick = (target: string) => {
   router.push({ name: target });
 };
+
+const isDarkMode = computed(() => layoutStore.darkMode);
 </script>
 
 <template>
@@ -44,6 +49,16 @@ const handleClick = (target: string) => {
         <span :class="iconWithStyle(item.icon)" class="text-2xl" />
       </li>
     </ul>
+
+    <div class="skin-toggle" @click="layoutStore.toggleDarkMode(!isDarkMode)">
+      <span
+        class="pi"
+        :class="{
+          'pi-moon': isDarkMode,
+          'pi-sun': !isDarkMode
+        }"
+      />
+    </div>
   </div>
 </template>
 
@@ -51,27 +66,28 @@ const handleClick = (target: string) => {
 @tailwind components;
 @layer components {
   .sidebar {
-    @apply bg-[#04263E] w-screen h-[4.5rem] flex px-2 flex-row items-center gap-8
-		md:flex-col md:h-full md:py-8 md:w-28 md:px-0 overflow-clip;
+    @apply w-screen h-[4.5rem] flex px-2 flex-row items-center gap-8 overflow-clip duration-300
+		bg-amber-50 dark:bg-ultramarine-700
+		md:flex-col md:h-full md:py-8 md:w-28 md:px-0;
   }
 
   .logo {
-    @apply text-[#12D989] uppercase select-none cursor-pointer font-extrabold hidden
+    @apply uppercase select-none cursor-pointer font-extrabold hidden
+		text-lotus dark:text-emerald-accent
 		md:block;
   }
 
   .avatar {
     @apply hidden justify-center items-center h-16 w-fit cursor-pointer py-2 rounded-full
-		md:w-16 md:inline-flex
+		md:w-full md:inline-flex
 		hover:bg-slate-300/50
 		transition-all duration-300;
 
     &.active-item {
-      @apply bg-emerald-500 hover:text-white hover:bg-emerald-500 rounded-none
-			md:px-0;
-      @media (min-width: 768px) {
-          width: 140%;
-        }
+      @apply hover:text-white rounded-none
+			bg-lotus dark:bg-emerald-500
+			md:px-0 md:w-[150%];
+
       /*应该清除和未选中状态下互斥的样式*/
     }
 
@@ -89,24 +105,27 @@ const handleClick = (target: string) => {
   }
 
   .nav-container {
-    @apply flex flex-row w-full justify-between
-		md:flex-col md:gap-2 md:justify-center items-center;
+    @apply flex flex-row w-full justify-between items-center flex-1
+		md:flex-col md:gap-2 md:justify-start;
 
     .nav {
-      @apply text-white py-4 px-12 cursor-pointer transition-all duration-300 rounded-full inline-flex justify-center items-center
+      @apply py-4 px-12 cursor-pointer transition-all duration-300 rounded-full inline-flex justify-center items-center
 			md:px-6 md:h-16 md:w-16
-			dark:text-white
+			text-lotus dark:text-white
 			hover:text-emerald-500 hover:bg-slate-300/50;
 
       &.active-item {
-        @apply bg-emerald-500 hover:text-white hover:bg-emerald-500 rounded-none
-				md:px-0;
-        @media (min-width: 768px) {
-          width: 140%;
-        }
-        /*应该清除和未选中状态下互斥的样式*/
+        @apply bg-lotus text-white dark:bg-emerald-500 dark:hover:text-white
+				md:px-0 md:w-[150%];
       }
     }
+  }
+
+  .skin-toggle {
+    @apply py-4 px-12 cursor-pointer transition-all duration-300 rounded-full inline-flex justify-center items-center
+		md:px-6 md:h-16 md:w-16
+		text-lotus dark:text-white
+		hover:text-emerald-500 hover:bg-slate-300/50;
   }
 }
 </style>

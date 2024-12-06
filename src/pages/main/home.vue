@@ -10,43 +10,43 @@ import { fixedChannels } from '@/services/channel-service';
 
 const chatLog = ref<Array<ChannelMessage>>(fixedChatlog);
 const channels = ref<Array<Channel>>(fixedChannels);
-  
+
 const state = reactive({
-  displayState: 'home' as 'home' | 'channels' | 'chat',
-  selectedChannel: undefined as Channel | undefined,
+  displayState: 'HOME' as 'HOME' | 'CHANNELS' | 'CHAT',
+  selectedChannel: undefined as Channel | undefined
 });
 
 const navigateHome = () => {
   state.selectedChannel = undefined;
-  state.displayState = 'home';
+  state.displayState = 'HOME';
 };
 
 const showChannels = () => {
-  state.displayState = 'channels';
+  state.displayState = 'CHANNELS';
 };
 
 const selectChannel = (channel: Channel) => {
   state.selectedChannel = channel;
-  state.displayState = 'chat';
+  state.displayState = 'CHAT';
 };
 </script>
 
 <template>
   <div class="home-page flex flex-row w-full">
-    <div class="channel-list" :class="{ hidden: state.displayState !== 'channels' }">
-      <channel-list
+    <div class="channel-list" :class="{ hidden: state.displayState !== 'CHANNELS' }">
+      <ChannelList
         :selected="state.selectedChannel"
         :data="channels"
         title="频道"
         subtitle="Channel"
-        @back-home="navigateHome"
+        @navigate-home="navigateHome"
         @select-channel="selectChannel"
       />
     </div>
 
-    <div class="main-container" :class="{ hidden: state.displayState === 'channels' } /** Shows Homecard or Chatlog */">
-      <channel-detail v-if="state.selectedChannel" :channel="state.selectedChannel" :messages="chatLog" />
-      <home-card v-else />
+    <div class="main-container" :class="{ hidden: state.displayState === 'CHANNELS' } /** Shows Homecard or Chatlog */">
+      <ChannelDetail v-if="state.selectedChannel" :channel="state.selectedChannel" :messages="chatLog" />
+      <HomeCard v-else />
       <div class="md:hidden" @click="showChannels">打开频道列表</div>
     </div>
   </div>
@@ -56,7 +56,8 @@ const selectChannel = (channel: Channel) => {
 @tailwind components;
 @layer components {
   .main-container {
-    @apply flex-1 bg-[#0c263a]  w-full
+    @apply flex-1 w-full duration-300
+    bg-slate-200 dark:bg-ultramarine-900
 		md:block md:h-screen;
   }
 

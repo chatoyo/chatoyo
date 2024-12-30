@@ -1,17 +1,16 @@
-import {createRouter, createWebHistory} from "vue-router";
-import routes from "./routes";
+import { createRouter, createWebHistory } from 'vue-router';
+import routes from './routes';
 
-let index = createRouter({
-    history: createWebHistory(),
-    routes: routes,
-})
+const routerInstance = createRouter({
+  history: createWebHistory(),
+  routes: routes
+});
 
+routerInstance.beforeEach((to, _from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title as string;
+  }
+  next();
+});
 
-index.beforeEach((to, _from, next) => {
-    if (to.meta.title) {
-        document.title = to.meta.title.toString();
-    }
-    next()
-})
-
-export default index
+export default routerInstance;

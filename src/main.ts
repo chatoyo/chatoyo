@@ -1,14 +1,20 @@
-import {createApp} from 'vue'
-import './assets/tailwind.css'
-import './style.css'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 
-import {createPinia} from "pinia";
-import router from "./router";
+// Stylesheets
+import './assets/tailwind.css';
+import './style.css';
+import 'primeicons/primeicons.css';
 
-const pinia = createPinia()
+// Dependencies
+import pinia from './store';
+import router from './router';
 
-const instance = createApp(App)
-instance.use(pinia)
-instance.use(router)
-instance.mount('#app')
+// Dependency injection
+
+// Instance declarations
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+const instance = createApp(App);
+instance.use(pinia);
+instance.use(router);
+instance.mount('#app');

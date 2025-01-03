@@ -14,6 +14,14 @@ const loginRoutes: RouteRecordRaw = {
       meta: {
         title: '登陆 - ChatoYo'
       }
+    },
+    {
+      component: () => import('@pages/login/reset-password.vue'),
+      name: 'reset-password',
+      path: 'reset-password',
+      meta: {
+        title: '重置密码 - ChatoYo'
+      }
     }
   ]
 };

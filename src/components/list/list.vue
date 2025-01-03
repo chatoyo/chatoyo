@@ -42,9 +42,9 @@ const onSelectChannel = (newChannel: Channel) => {
       </button>
     </div>
 
-    <ul class="divide-y divide-slate-500 dark:divide-slate-100">
+    <ul class="list">
       <li
-        class="channel-item"
+        class="item"
         :class="{ selected: selected?.id === item.id }"
         v-for="(item, index) in props.data"
         :key="index"
@@ -77,35 +77,37 @@ const onSelectChannel = (newChannel: Channel) => {
 </template>
 
 <style scoped lang="scss">
-@import '/src/style.css';
-
 @tailwind components;
 @layer components {
   .channel-list-component {
-    @apply px-4 py-8 flex flex-col gap-4 h-full duration-300
-		bg-sunrise-white dark:bg-ultramarine-500;
+    @apply px-4 py-8 flex flex-col gap-4 min-h-screen duration-300 transition-colors
+    bg-sunrise-white dark:bg-ultramarine-500;
   }
 
   .header {
     @apply flex gap-2 items-baseline select-none h-12 font-sans font-bold
-		text-lotus dark:text-emerald-400;
+    text-lotus dark:text-emerald-400;
   }
 
   .btn-back {
     @apply ml-auto inline-flex items-center justify-center h-8 gap-2 px-4 text-xs font-medium tracking-wide text-white
-		transition duration-300 rounded shadow-md justify-self-center whitespace-nowrap
-		hover:shadow-sm
+    transition duration-300 rounded shadow-md justify-self-center whitespace-nowrap
+    hover:shadow-sm
     bg-purple-600 hover:bg-lotus hover:shadow-lotus/80
-		dark:bg-emerald-500 dark:shadow-emerald-200
-		dark:hover:bg-emerald-600 dark:hover:shadow-emerald-200
-		focus-visible:outline-none focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200
-		disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none;
+    dark:bg-emerald-500 dark:shadow-emerald-200
+    dark:hover:bg-emerald-600 dark:hover:shadow-emerald-200
+    focus-visible:outline-none focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200
+    disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none;
   }
 
-  .channel-item {
+  .list {
+    @apply flex-1 divide-y divide-slate-500 dark:divide-slate-100;
+  }
+
+  .item {
     @apply flex items-center gap-4 px-4 py-3 select-none cursor-pointer
-		hover:bg-lotus/10 dark:hover:bg-slate-300/20
-		transition-all duration-300;
+    hover:bg-lotus/10 dark:hover:bg-slate-300/20
+    transition-all duration-300;
 
     .description {
       @apply w-full text-sm truncate text-slate-400;

@@ -1,3 +1,15 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+@layer base {
+	.scrollable {
+		@apply
+		overflow-auto
+		[&::-webkit-scrollbar]:w-2
+		[&::-webkit-scrollbar-track]:bg-gray-100
+		[&::-webkit-scrollbar-thumb]:bg-gray-500
+		dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+		dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500;
+	}
+}

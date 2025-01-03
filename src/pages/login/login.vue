@@ -1,10 +1,28 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+interface LoginForm {
+  username: string;
+  password: string;
+}
+
+const redirect = (target: string) => {
+  router.push({ name: target });
+};
+
+const loginHandler = () => {
+  // TODO: verify
+  // TODO: redirect
+  redirect('home');
+};
+</script>
 
 <template>
   <div class="login-page">
-    <div class="form w-96 bg-[#0c263a]/50 h-md p-4 rounded-md">
+    <div class="form">
       <span class="title">chatoyo </span>
-      <div class="max-w-sm space-y-4">
+      <form class="form-core">
         <div class="relative">
           <input
             type="email"
@@ -58,21 +76,11 @@
             </svg>
           </div>
         </div>
-      </div>
+      </form>
 
-      <div class="flex flex-col md:flex-row gap-2 my-6">
-        <button
-          type="button"
-          class="w-full py-3 px-4 inline-flex justify-center duration-300 items-center text-sm font-medium rounded-lg border border-transparent bg-teal-500 text-white hover:bg-teal-600 focus:outline-none focus:bg-teal-600 disabled:opacity-50 disabled:pointer-events-none"
-        >
-          登陆
-        </button>
-        <button
-          type="button"
-          class="w-full py-3 px-4 inline-flex justify-center duration-300 items-center text-sm font-medium rounded-lg border border-transparent bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:bg-blue-600 disabled:opacity-50 disabled:pointer-events-none"
-        >
-          找回密码
-        </button>
+      <div class="submit-btn">
+        <button type="submit" class="btn btn-login" @click="loginHandler">登陆</button>
+        <button type="button" class="btn btn-reset-pwd" @click="redirect('reset-password')">重置密码</button>
       </div>
     </div>
   </div>
@@ -83,11 +91,43 @@
 @layer components {
   .login-page {
     @apply flex w-full min-h-screen flex-col justify-center items-center
-		bg-[url('/images/login/bg.jpg')] bg-center bg-cover;
+		bg-[url('/images/login/bg-login.jpg')] bg-center bg-cover;
+  }
+
+  .form {
+    @apply w-96 bg-[#0c263a]/50 p-4 rounded-md;
   }
 
   .title {
     @apply py-4 uppercase text-emerald-500 font-extrabold w-full inline-flex justify-center text-2xl select-none;
+  }
+
+  .form-core {
+    @apply max-w-sm space-y-4;
+  }
+
+  .submit-btn {
+    @apply flex flex-col md:flex-row gap-2 my-6;
+  }
+
+  .btn {
+    @apply w-full py-3 px-4 inline-flex justify-center duration-300 items-center text-sm font-medium rounded-lg;
+  }
+
+  .btn-login {
+    @apply border border-transparent
+		bg-teal-500 text-white
+		hover:bg-teal-600
+		focus:outline-none focus:bg-teal-600
+		disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-reset-pwd {
+    @apply border border-transparent
+		bg-blue-500 text-white
+		hover:bg-blue-600
+		focus:outline-none focus:bg-blue-600
+		disabled:opacity-50 disabled:pointer-events-none;
   }
 }
 </style>

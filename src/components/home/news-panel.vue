@@ -6,11 +6,11 @@ interface NewsItem {
 }
 
 interface NewsPanelProp {
-  data: NewsItem[];
+  data?: NewsItem[];
 }
 
 const props = withDefaults(defineProps<NewsPanelProp>(), {
-  data: [
+  data: () => [
     {
       title: '关于元旦和春节假期放假放假的通知',
       link: 'string;',

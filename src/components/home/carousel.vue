@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
 
-const current = defineModel<number>('current');
+const current = defineModel<number>('current', {default: 0});
 const props = withDefaults(
   defineProps<{
-    data: { url: string }[];
+    data?: { url: string }[];
   }>(),
   {
-    data: [
+    data: () => [
       {
         url: 'https://bbs-static.miyoushe.com/static/2024/12/09/6f632edd96fd8d0877defc3d52c4905c_507210531003439103.jpg'
       },
@@ -18,13 +17,13 @@ const props = withDefaults(
   }
 );
 
-const navigate = (direction: number) => {
-  current.value += direction;
-  if (current.value <= 0) current.value = props.data.length - 1;
-  if (current.value + 1 >= props.data.length) current.value = 0;
+const navigate = (direction: 1 | -1) => {
+  let newIndex = current.value += direction;
+  if (newIndex === -1) {newIndex = props.data.length - 1}
+  else if (newIndex === props.data.length) newIndex = 0;
+  current.value = newIndex;
 };
 
-onMounted(() => (current.value = 0));
 </script>
 
 <template>

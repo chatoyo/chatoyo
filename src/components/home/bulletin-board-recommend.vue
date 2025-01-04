@@ -13,11 +13,11 @@ interface BulletinItem {
 }
 
 interface BulletinBoardProp {
-  data: BulletinItem[];
+  data?: BulletinItem[];
 }
 
 const props = withDefaults(defineProps<BulletinBoardProp>(), {
-  data: [
+  data: () => [
     {
       title: '关于元旦和春节假期放假放假的通知',
       link: 'string;',

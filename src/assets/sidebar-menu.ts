@@ -1,10 +1,10 @@
-interface Menu {
+type MenuItemData = {
 	target: string,
 	icon: string,
 	title: string
 }
 
-export default [
+const defaultMenuItemData = [
 	{
 		target: 'home',
 		icon: 'home',
@@ -20,4 +20,6 @@ export default [
 		icon: 'user',
 		title: '联系人'
 	}
-] as Menu[]
+] as MenuItemData[];
+
+export default defaultMenuItemData;

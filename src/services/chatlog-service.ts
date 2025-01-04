@@ -1,8 +1,8 @@
-import { ChannelMessage } from "@/models";
+import { BaseChatMessage } from "@/models";
 
 // TODO: Implement Chatlog Service
 
-export const fixedChatlog : Array<ChannelMessage> = [
+export const fixedChatlog : Array<BaseChatMessage> = [
     {
       content: '你好，我是西风骑士团团长，琴·古恩希尔德。叫我琴就好',
       avatar: 'https://patchwiki.biligame.com/images/ys/8/8d/lm9cpnooekvfzfy7fbogykwjro3v5lw.png',

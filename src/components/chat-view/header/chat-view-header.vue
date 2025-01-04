@@ -1,10 +1,10 @@
 <script setup lang="ts">
-export type ChannelDetailHeaderProps = {
+export type ChatViewHeaderProps = {
   title: string;
   pic: string;
 };
 
-const props = defineProps<ChannelDetailHeaderProps>();
+const props = defineProps<ChatViewHeaderProps>();
 </script>
 
 <template>

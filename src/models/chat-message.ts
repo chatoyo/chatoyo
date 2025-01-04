@@ -1,4 +1,4 @@
-export type ChannelMessage = {
+export type BaseChatMessage = {
 	self: boolean,
 	content: string,
 	avatar: string,

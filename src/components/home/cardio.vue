@@ -2,10 +2,10 @@
 <!-- Named by Archie Xing -->
 <script setup lang="ts">
 type CardioProps = {
-  avatar: string;
-  name: string;
-  sex: number;
-  slogan: string;
+  avatar?: string;
+  name?: string;
+  sex?: number;
+  slogan?: string;
 };
 
 const props = withDefaults(defineProps<CardioProps>(), {
@@ -26,7 +26,7 @@ const sexSymbol = {
     <div class="avatar"><img class="avatar-img" :src="props.avatar" /></div>
     <div class="title">
       <span>{{ props.name }}</span>
-      <span class="sex" :class="`bg-${sexSymbol[props.sex].color}-500`">{{ sexSymbol[props.sex].text }}</span>
+      <span class="sex" :class="`bg-${sexSymbol[props.sex as 1 | 0].color}-500`">{{ sexSymbol[props.sex as 1 | 0].text }}</span>
     </div>
     <div class="slogan">
       {{ props.slogan }}

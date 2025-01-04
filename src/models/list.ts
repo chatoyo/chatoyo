@@ -1,10 +1,6 @@
-export interface ListChannelItem {
+export interface ChatItem {
 	id: number,
 	title: string,
 	description: string,
 	pic: string
-}
-
-export interface Channel extends ListChannelItem {
-	status?: string
 }

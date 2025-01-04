@@ -17,7 +17,7 @@ const mainRoutes: RouteRecordRaw = {
       }
     },
     {
-      component: () => import('@pages/main/message.vue'),
+      component: () => import('@/pages/main/channels.vue'),
       name: 'message',
       path: 'message',
       meta: {

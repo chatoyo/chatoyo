@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {ChannelMessage} from "@/models/chat-message.ts";
+import {BaseChatMessage} from "@/models/chat-message.ts";
 
 type ChannelMessageProps = {
-	messages: Array<ChannelMessage>
+	messages: Array<BaseChatMessage>
 }
 
 const props = defineProps<ChannelMessageProps>();

@@ -9,8 +9,8 @@ const isDarkMode = computed(() => layoutStore.darkMode);
 
 <template>
   <div class="layout" :class="{ dark: isDarkMode }">
-    <sidebar class="flex-shrink-0" />
-    <router-view class="flex-1" />
+    <sidebar class="sidebar" />
+    <router-view class="main" />
   </div>
 </template>
 
@@ -20,6 +20,14 @@ const isDarkMode = computed(() => layoutStore.darkMode);
   .layout {
     @apply flex flex-col-reverse h-screen
 		md:min-h-screen md:flex-row;
+  }
+
+  .sidebar {
+    @apply flex-shrink-0;
+  }
+
+  .main {
+    @apply flex-1 h-screen;
   }
 }
 </style>

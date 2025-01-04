@@ -66,7 +66,7 @@ const isDarkMode = computed(() => layoutStore.darkMode);
 @tailwind components;
 @layer components {
   .sidebar {
-    @apply w-screen h-[4.5rem] flex px-2 flex-row items-center gap-8 overflow-clip duration-300
+    @apply w-screen h-[4.5rem] flex px-2 flex-row items-center gap-8 overflow-x-clip transition-none transition-colors duration-300
 		bg-amber-50 dark:bg-ultramarine-700
 		md:flex-col md:h-full md:py-8 md:w-28 md:px-0;
   }
@@ -122,7 +122,8 @@ const isDarkMode = computed(() => layoutStore.darkMode);
   }
 
   .skin-toggle {
-    @apply py-4 px-12 cursor-pointer transition-all duration-300 rounded-full inline-flex justify-center items-center
+    @apply py-4 px-12 cursor-pointer transition-all duration-300 rounded-full justify-center items-center
+		hidden md:inline-flex
 		md:px-6 md:h-16 md:w-16
 		text-lotus dark:text-white
 		hover:text-emerald-500 hover:bg-slate-300/50;

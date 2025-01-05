@@ -4,19 +4,22 @@ import Cardio from '@components/home/cardio.vue';
 import NewsPanel from '@components/home/news-panel.vue';
 import BulletinBoardRecommend from '@components/home/bulletin-board-recommend.vue';
 
-import { reactive, ref } from 'vue';
+import { onUnmounted, reactive, ref } from 'vue';
 
 import { ChatItem, BaseChatMessage } from '@/models';
 import { fixedChatlog } from '@/services/chatlog-service';
 import { fixedChannels } from '@/services/channel-service';
 import ChatsList from '@components/chats-list/chats-list.vue';
 import ChatView from '@/components/chat-view/chat-view.vue';
+import { useHomePageStore } from '@/store';
 
 const chatLog = ref<Array<BaseChatMessage>>(fixedChatlog);
 const chats = ref<Array<ChatItem>>(fixedChannels);
+
+const homePageStore = useHomePageStore();
 const state = reactive({
   displayState: 'HOME' as 'HOME' | 'LIST' | 'CHAT',
-  selectedChat: undefined as ChatItem | undefined
+  selectedChat: homePageStore.selectedChat
 });
 const carouselCurrentIndex = ref(0);
 
@@ -33,6 +36,10 @@ const selectChat = (chat: ChatItem) => {
   state.selectedChat = chat;
   state.displayState = 'CHAT';
 };
+
+onUnmounted(()=>{
+  homePageStore.saveSelectedChat(state.selectedChat);
+})
 </script>
 
 <template>

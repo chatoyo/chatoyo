@@ -3,7 +3,8 @@ import ChatView from "@/components/chat-view/chat-view.vue";
 import ChatsList from "@/components/chats-list/chats-list.vue";
 import { BaseChatMessage, ChatItem } from "@/models";
 import { fixedChatlog } from "@/services/chatlog-service";
-import {reactive, ref} from "vue";
+import { useChannelPageStore } from "@/store";
+import {onUnmounted, reactive, ref} from "vue";
 
 const chatLog = ref<Array<BaseChatMessage>>(fixedChatlog);
 const pseudoChannels = ref<ChatItem[]>([
@@ -20,9 +21,10 @@ const pseudoChannels = ref<ChatItem[]>([
 	},
 ]);
 
+const channelPageStore = useChannelPageStore();
 const state = reactive({
   displayState: 'HOME' as 'HOME' | 'LIST' | 'CHAT',
-  selectedChat: undefined as ChatItem | undefined
+  selectedChat: channelPageStore.selectedChat
 });
 
 const navigateHome = () => {
@@ -40,6 +42,9 @@ const selectChat = (chat: ChatItem) => {
   state.displayState = 'CHAT';
 };
 
+onUnmounted(()=>{
+  channelPageStore.saveSelectedChat(state.selectedChat);
+})
 </script>
 
 <template>

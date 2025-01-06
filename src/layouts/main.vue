@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import Sidebar from '@/components/sidebar/sidebar.vue';
+import Sidebar from '@/components/layout/sidebar.vue';
 import { useLayoutStore } from '@/store';
 
 const layoutStore = useLayoutStore();

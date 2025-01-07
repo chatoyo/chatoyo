@@ -14,13 +14,13 @@ export const useHomePageStore = defineStore('homePageStore', {
 });
 
 export const useChannelPageStore = defineStore('channelPageStore', {
-    state: () => ({
-      selectedChat: undefined as ChatItem | undefined
-    }),
-    actions: {
-      saveSelectedChat: function (savedChat: ChatItem | undefined) {
-        this.selectedChat = savedChat;
-      }
-    },
-    persist: true
-  });
+  state: () => ({
+    selectedChat: undefined as ChatItem | undefined
+  }),
+  actions: {
+    saveSelectedChat: function (savedChat: ChatItem | undefined) {
+      this.selectedChat = savedChat;
+    }
+  },
+  persist: true
+});

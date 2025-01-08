@@ -3,5 +3,6 @@ export type BaseChatMessage = {
 	content: string,
 	avatar: string,
 	status: string,
-	time?: number
+	time?: number,
+	type?: 1 | 2 // undefined = text, 1 = img
 }

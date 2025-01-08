@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import Carousel from '@components/channel/carousel.vue';
 import Cardio from '@components/cardio.vue';
-import NewsPanel from '@components/home/news-panel.vue';
-import BulletinBoardRecommend from '@components/home/bulletin-board-recommend.vue';
 
 import { onUnmounted, reactive, ref } from 'vue';
 
@@ -12,6 +9,9 @@ import { fixedChannels } from '@/services/channel-service';
 import ChatsList from '@components/chats-list/chats-list.vue';
 import ChatView from '@/components/chat-view/chat-view.vue';
 import { useHomePageStore } from '@/store';
+import TodoList from '@components/home/todo-list.vue';
+import Achievement from '@components/home/achievement.vue';
+import Status from '@components/home/status.vue';
 
 const chatLog = ref<Array<BaseChatMessage>>(fixedChatlog);
 const chats = ref<Array<ChatItem>>(fixedChannels);
@@ -89,8 +89,6 @@ onUnmounted(() => {
 
   .main-container {
     @apply flex-1  transition-colors duration-300
-		bg-slate-200 dark:bg-ultramarine-900
-		flex flex-col gap-2;
     bg-slate-200 dark:bg-ultramarine-900
     flex flex-col gap-2;
   }

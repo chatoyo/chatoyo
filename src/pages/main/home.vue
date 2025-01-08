@@ -64,6 +64,13 @@ onUnmounted(() => {
     </div>
     <div v-else class="main-container sm:p-4 scrollable">
       <Cardio />
+      <div class="flex justify-start gap-2">
+        <Status />
+        <Achievement />
+      </div>
+      <div class="flex justify-start">
+        <TodoList />
+      </div>
     </div>
   </div>
 </template>
@@ -77,12 +84,15 @@ onUnmounted(() => {
 
   .chats-list-container {
     @apply w-full h-full
-		md:w-[20rem] md:block;
+    md:w-[20rem] md:block;
   }
+
   .main-container {
     @apply flex-1  transition-colors duration-300
 		bg-slate-200 dark:bg-ultramarine-900
 		flex flex-col gap-2;
+    bg-slate-200 dark:bg-ultramarine-900
+    flex flex-col gap-2;
   }
 }
 </style>

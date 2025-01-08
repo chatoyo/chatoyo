@@ -2,9 +2,12 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import AutoImport from 'unplugin-auto-import/vite';
 import { fileURLToPath, URL } from 'node:url';
+import { viteMockServe } from 'vite-plugin-mock';
+import { devServerOptions } from './config/dev.ts';
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: devServerOptions,
   plugins: [
     vue(),
     AutoImport({
@@ -12,6 +15,9 @@ export default defineConfig({
       eslintrc: {
         enabled: true // <-- this
       }
+    }),
+      mockPath: 'mock',
+      enable: true
     })
   ],
   resolve: {

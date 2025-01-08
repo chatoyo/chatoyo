@@ -16,12 +16,18 @@ declare module 'vue' {
     ChatViewHeader: typeof import('./src/components/chat-view/header/chat-view-header.vue')['default']
     Empty: typeof import('./src/components/list/empty.vue')['default']
     Knob: typeof import('primevue/knob')['default']
+    LabeledToggle: typeof import('./src/components/minor-custom/labeled-toggle.vue')['default']
     MessageBox: typeof import('./src/components/chat-view/message-box/message-box.vue')['default']
+    MessageBubble: typeof import('./src/components/chat-view/message-box/components/message-bubble.vue')['default']
     NewsPanel: typeof import('./src/components/home/news-panel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./src/components/layout/sidebar.vue')['default']
     Status: typeof import('./src/components/home/status.vue')['default']
+    StatusContainer: typeof import('./src/components/chat-view/message-box/components/status-container.vue')['default']
+    StatusSending: typeof import('./src/components/chat-view/message-box/components/status-sending.vue')['default']
+    StatusSent: typeof import('./src/components/chat-view/message-box/components/status-sent.vue')['default']
+    StatusUnread: typeof import('./src/components/chat-view/message-box/components/status-unread.vue')['default']
     TodoList: typeof import('./src/components/home/todo-list.vue')['default']
   }
 }

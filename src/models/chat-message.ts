@@ -2,5 +2,6 @@ export type BaseChatMessage = {
 	self: boolean,
 	content: string,
 	avatar: string,
-	status: string
+	status: string,
+	time?: number
 }

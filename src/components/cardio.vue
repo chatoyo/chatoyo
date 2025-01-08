@@ -2,6 +2,9 @@
 <!-- Named by Archie Xing -->
 <script setup lang="ts">
 import { useModeStore } from '@store/mode-store.ts';
+import { computed } from 'vue';
+import Toggle from './minor-custom/labeled-toggle.vue';
+import { Slider } from 'primevue';
 
 type CardioProps = {
   avatar?: string;
@@ -49,26 +52,18 @@ const isWorkMode = computed(() => modeStore.workMode === 'WORK');
     </div>
     <div class="mode-toggle">
       <div class="relative flex flex-col flex-wrap items-center gap-2">
-        <input
-          class="relative w-12 h-6 transition-colors appearance-none cursor-pointer hover:bg-slate-400 after:hover:bg-slate-600 checked:hover:bg-emerald-300 checked:after:hover:bg-emerald-600 focus:outline-none checked:focus:bg-emerald-400 checked:after:focus:bg-emerald-700 focus-visible:outline-none peer rounded-xl bg-slate-300 after:absolute after:top-0 after:left-0 after:h-6 after:w-6 after:rounded-full after:bg-slate-500 after:transition-all checked:bg-emerald-200 checked:after:left-6 checked:after:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:after:bg-slate-300"
-          type="checkbox"
-          :checked="isWorkMode"
-          id="id-c04"
-        />
-        <label
-          class="cursor-pointer text-slate-100 peer-disabled:cursor-not-allowed peer-disabled:text-slate-400"
-          for="id-c04"
-        >
+        <Toggle id="id-c04" :model-value="isWorkMode" :disabled="false">
           工作模式
-        </label>
+        </Toggle>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 @tailwind components;
 @layer components {
+
   .cardio {
     @apply bg-amber-50 dark:bg-sky-900
     flex gap-4 items-center pe-6
@@ -114,6 +109,7 @@ const isWorkMode = computed(() => modeStore.workMode === 'WORK');
 
   .stat-item {
     @apply flex flex-col items-end;
-  }
+    }
+
 }
 </style>

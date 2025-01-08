@@ -34,5 +34,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tailwind.config.js", "postcss.config.js"]
+  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.tsx", "src/**/*.vue", "tailwind.config.js", "postcss.config.js"]
 }

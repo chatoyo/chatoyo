@@ -16,10 +16,9 @@ import PrimeVue from 'primevue/config';
 // Instance declarations
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 const instance = createApp(App);
-
 instance.use(PrimeVue, {
-  theme: 'none'
-});
+    theme: 'none',
+})
 instance.use(pinia);
 instance.use(router);
 instance.mount('#app');

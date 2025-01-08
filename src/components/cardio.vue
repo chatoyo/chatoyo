@@ -60,8 +60,7 @@ const isWorkMode = computed(() => modeStore.workMode === 'WORK');
   </div>
 </template>
 
-<style lang="scss">
-// @import '@assets/tailwind.css';
+<style scoped lang="scss">
 @tailwind components;
 @layer components {
 

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "chatoyo": "file:",
+    "dayjs": "^1.11.13",
     "node.url": "^1.0.8",
     "pinia": "^2.2.8",
     "pinia-plugin-persistedstate": "^4.1.3",

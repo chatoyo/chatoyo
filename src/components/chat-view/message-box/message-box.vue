@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import SentStatusIcon from "@/assets/svgs/SentStatusIcon.vue";
 import portraitImg from '@/assets/img/head_portrait.jpg';
 
 import { BaseChatMessage } from "@/models/chat-message.ts";
 import MessageBubble from "./components/message-bubble.vue"
 import { nextTick, ref } from "vue";
 import { animation } from "@/utils/util";
+import StatusSent from "./components/status-sent.vue";
+import StatusSending from "./components/status-sending.vue";
+import StatusContainer from './components/status-container.vue';
+import { formatEpochTime } from '@/utils/message-time';
 
 type MessageBoxProps = {
   messages: Array<BaseChatMessage>;
@@ -28,7 +31,8 @@ const sendText = () => {
           self: true,
           content: inputText,
           avatar: props.userAvatar || portraitImg,
-          status: ''
+          status: 'SENT',
+          time: Date.now()
         };
         sendMsg(chatMsg);
         // Emitting an event up to parent to reorder or do something when a new message is sent
@@ -58,12 +62,12 @@ const scrollBottom = () => {
       <li class="message" v-for="(item, index) in props.messages" :key="index">
         <!-- SELF MESSAGE -->
         <div class="self" v-if="item.self">
+          <span class="message-time text-slate-700 dark:text-white self-center">
+            {{formatEpochTime(item.time)}}
+          </span>
           <div class="self-wrapper">
             <MessageBubble :content="item.content" :self="true" />
-            <span class="self-status">
-              <SentStatusIcon />
-              已发送
-            </span>
+            <StatusContainer :message="item"/>
           </div>
           <img class="avatar" :src="item.avatar" alt="" />
         </div>
@@ -73,14 +77,14 @@ const scrollBottom = () => {
           <img class="avatar" :src="item.avatar" alt="" />
           <div>
             <MessageBubble :content="item.content" :self="false" />
-            <span class="status">
-              <SentStatusIcon />
-              已发送
-            </span>
+            <StatusContainer :message="item"/>
           </div>
+          <span class="message-time text-slate-700 dark:text-white self-center">
+            {{formatEpochTime(item.time)}}
+          </span>
         </div>
       </li>
-      <span class="h-28"></span>
+      <div class="h-32"></div>
     </ul>
     <div class="input-mask"></div>
     <div class="input-mask-dark"></div>
@@ -116,11 +120,11 @@ const scrollBottom = () => {
   }
 
   .message-box::-webkit-scrollbar {
-    @apply w-2 h-1 bg-ultramarine-900 dark:bg-slate-200
+    @apply w-2 h-1 dark:bg-ultramarine-900 bg-slate-200
   }
 
   .message-box::-webkit-scrollbar-thumb {
-    @apply bg-slate-200 dark:bg-ultramarine-900
+    @apply dark:bg-slate-200 bg-white rounded-full
   }
 
   .chat-content {
@@ -148,19 +152,15 @@ const scrollBottom = () => {
     @apply inline-flex flex-col justify-end;
   }
 
-  .self-status {
-    @apply mt-1.5 ms-auto flex items-center gap-x-1 text-xs text-gray-200;
-  }
-
   .status {
-    @apply mt-1.5 flex items-center gap-x-1 text-xs text-gray-200;
+    @apply mt-1.5 flex items-center gap-x-1 text-xs dark:text-gray-200  text-gray-700;
   }
 
   .input-mask {
-    @apply absolute bottom-0 left-0 w-full h-32 pointer-events-none to-transparent dark:bg-gradient-to-t dark:from-ultramarine-900 dark:via-ultramarine-900/80 opacity-0 dark:opacity-100 transition-opacity duration-300;
+    @apply absolute bottom-0 left-0 w-[calc(100%-0.5rem)] h-28 pointer-events-none to-transparent dark:bg-gradient-to-t dark:from-ultramarine-900 dark:via-ultramarine-900/80 opacity-0 dark:opacity-100 transition-opacity duration-300;
   }
   .input-mask-dark {
-    @apply absolute bottom-0 left-0 w-full h-32 pointer-events-none to-transparent bg-gradient-to-t from-slate-200 via-slate-200/80 opacity-100 dark:opacity-0 transition-opacity duration-300;
+    @apply absolute bottom-0 left-0 w-[calc(100%-0.5rem)] h-28 pointer-events-none to-transparent bg-gradient-to-t from-slate-200 via-slate-200/80 opacity-100 dark:opacity-0 transition-opacity duration-300;
   }
 
   .chat-inputs {

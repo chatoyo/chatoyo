@@ -33,6 +33,7 @@ export function throttle(fn, delay = 200) {
     }
  }
 //下拉动画
+// must have no borders
  export function animation(obj, target, fn1) {
     // console.log(fn1);
     // fn是一个回调函数，在定时器结束的时候添加
@@ -42,8 +43,8 @@ export function throttle(fn, delay = 200) {
       // 步长计算公式  越来越小
       // 步长取整
       var step = (target - obj.scrollTop) / 10;
-      step = step > 0 ? Math.ceil(step) : Math.floor(step);
-      if (obj.scrollTop >= target) {
+      step = Math.ceil(step);
+      if (obj.scrollTop >= target - 1) {
         clearInterval(obj.timer);
         // 如果fn1存在，调用fn
         if (fn1) {

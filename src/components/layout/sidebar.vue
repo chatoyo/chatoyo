@@ -46,7 +46,7 @@ const isDarkMode = computed(() => layoutStore.darkMode);
         :key="index"
         @click="handleClick(item.target)"
       >
-        <span :class="iconWithStyle(item.icon)" class="text-2xl" />
+        <span class="!text-2xl" :class="iconWithStyle(item.icon)" />
       </li>
     </ul>
 

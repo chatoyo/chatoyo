@@ -7,8 +7,8 @@ import { useChannelPageStore } from '@/store';
 import { onUnmounted, reactive, ref } from 'vue';
 import Cardio from '@components/cardio.vue';
 import Carousel from '@components/channel/carousel.vue';
-import BulletinBoardRecommend from '@components/home/bulletin-board-recommend.vue';
-import NewsPanel from '@components/home/news-panel.vue';
+import BulletinBoardRecommend from '@components/channel/bulletin-board-recommend.vue';
+import NewsPanel from '@components/channel/news-panel.vue';
 
 const chatLog = ref<Array<BaseChatMessage>>(fixedChatlog);
 const pseudoChannels = ref<ChatItem[]>([

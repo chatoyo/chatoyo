@@ -77,11 +77,14 @@ let lastDividerTime = 0;
 const hasDivider = (time: number | undefined, index: number) => {
   if(!time) return false;
 
-  lastMessageTime = time;
-  if(index === 0 || time - lastMessageTime >= 600000 || time - lastDividerTime >= 360000) {
+  if(index === 0 // 第一条消息
+    || time - lastMessageTime >= 600000 // 距离上次消息超过10分钟
+    || (time - lastDividerTime >= 360000 && (time / 60000 | 0) > lastMessageTime / 60000)) { // 距离上个DividerTime超过6分钟，且确保上个消息和此条消息不在一个分钟内（比如都在22:59）
     lastDividerTime = time;
+    lastMessageTime = time;
     return true;
   }
+  lastMessageTime = time;
   return false;
 };
 
@@ -176,7 +179,7 @@ const hasDivider = (time: number | undefined, index: number) => {
   }
 
   .message {
-    @apply grow my-3 relative z-0 max-w-fit flex gap-3;
+    @apply grow my-3 relative z-0 flex gap-3;
 
     .message-time {
       @apply text-slate-700 dark:text-white self-center -z-20 opacity-0;

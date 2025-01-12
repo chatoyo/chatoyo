@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import Cardio from '@components/cardio.vue';
+import NewsPanel from '@components/channel/news-panel.vue';
+import BulletinBoardRecommend from '@components/channel/bulletin-board-recommend.vue';
 
 import { onUnmounted, reactive, ref } from 'vue';
 

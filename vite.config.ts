@@ -4,9 +4,12 @@ import AutoImport from 'unplugin-auto-import/vite';
 import { fileURLToPath, URL } from 'node:url';
 import Components from 'unplugin-vue-components/vite';
 import { PrimeVueResolver } from '@primevue/auto-import-resolver';
+import { viteMockServe } from 'vite-plugin-mock';
+import { devServerOptions } from './config/dev.ts';
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: devServerOptions,
   plugins: [
     vue(),
     AutoImport({
@@ -17,6 +20,10 @@ export default defineConfig({
     }),
     Components({
       resolvers: [PrimeVueResolver()]
+   }),
+    viteMockServe({
+      mockPath: 'mock',
+      enable: true
     })
   ],
   resolve: {

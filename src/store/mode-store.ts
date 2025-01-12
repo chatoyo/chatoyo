@@ -3,7 +3,10 @@ import { Mode } from '@/models/mode.ts';
 
 export const useModeStore = defineStore('modeStore', {
   state: () => ({
-    workMode: undefined as Mode
+    mode: undefined as Mode
   }),
-  persist: true
+  persist: {
+    enabled: true,
+    storage: sessionStorage
+  }
 });

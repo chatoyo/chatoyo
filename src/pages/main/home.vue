@@ -12,6 +12,7 @@ import { useHomePageStore } from '@/store';
 import TodoList from '@components/home/todo-list.vue';
 import Achievement from '@components/home/achievement.vue';
 import Status from '@components/home/status.vue';
+import { useModeStore } from '@store/mode-store.ts';
 
 const chatLog = ref<Array<BaseChatMessage>>(fixedChatlog);
 const chats = ref<Array<ChatItem>>(fixedChannels);
@@ -35,6 +36,8 @@ const selectChat = (chat: ChatItem) => {
   state.selectedChat = chat;
   state.displayState = 'CHAT';
 };
+
+const currentMode = computed(() => useModeStore().workMode);
 
 onUnmounted(() => {
   homePageStore.saveSelectedChat(state.selectedChat);

@@ -19,13 +19,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-
-
     "types": [
       "pinia-plugin-persist"
     ]
   },
   "include": [
-    "vite.config.ts"
+    "vite.config.ts",
   ]
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Empty from '@components/list/empty.vue';
+import Empty from '@components/list/mui-empty.vue';
 
 interface BulletinItem {
   title: string;

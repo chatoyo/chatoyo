@@ -71,8 +71,12 @@ onUnmounted(() => {
         <Status />
         <Achievement />
       </div>
-      <div class="flex justify-start">
+      <div class="flex justify-start gap-2">
         <TodoList />
+        <FileBox />
+      </div>
+      <div class="flex justify-start gap-2">
+        <Microprogram />
       </div>
     </div>
   </div>

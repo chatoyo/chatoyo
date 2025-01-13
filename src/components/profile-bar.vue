@@ -25,8 +25,9 @@ const sexSymbol = {
   1: { text: '♀', color: 'pink' }
 };
 const modeStore = useModeStore();
-const isWorkMode = computed(() => modeStore.workMode === 'WORK');
-const username = computed(() => (isWorkMode ? props.name : props.nickname));
+const workMode = ref<boolean>(modeStore.mode === 'WORK');
+const username = computed(() => (workMode.value ? props.name : props.nickname));
+watch(workMode, () => (modeStore.mode = workMode.value ? 'WORK' : 'REST'));
 </script>
 
 <template>
@@ -53,7 +54,7 @@ const username = computed(() => (isWorkMode ? props.name : props.nickname));
     </div>
     <div class="mode-toggle">
       <div class="relative flex flex-col flex-wrap items-center gap-2">
-        <Toggle id="id-c04" :model-value="isWorkMode" :disabled="false"> 工作模式</Toggle>
+        <Toggle id="id-c04" v-model="workMode" :disabled="false"> 工作模式</Toggle>
       </div>
     </div>
   </div>

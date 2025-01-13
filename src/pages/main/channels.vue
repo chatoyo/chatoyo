@@ -5,7 +5,7 @@ import { BaseChatMessage, ChatItem } from '@/models';
 import { fixedChatlog } from '@/services/chatlog-service';
 import { useChannelPageStore } from '@/store';
 import { onUnmounted, reactive, ref } from 'vue';
-import Cardio from '@components/cardio.vue';
+import Cardio from '@components/profile-bar.vue';
 import Carousel from '@components/channel/carousel.vue';
 import BulletinBoardRecommend from '@components/channel/bulletin-board-recommend.vue';
 import NewsPanel from '@components/channel/news-panel.vue';

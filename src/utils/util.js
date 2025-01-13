@@ -33,7 +33,6 @@ export function throttle(fn, delay = 200) {
     }
  }
 //下拉动画
-// must have no borders
  export function animation(obj, target, fn1) {
     // console.log(fn1);
     // fn是一个回调函数，在定时器结束的时候添加

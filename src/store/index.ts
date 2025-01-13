@@ -10,3 +10,4 @@ export default pinia;
 export * from './layout-store.ts';
 export * from './mode-store.ts';
 export * from './pages-store.ts';
+export * from './user-store.ts';

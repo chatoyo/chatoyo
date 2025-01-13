@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import portraitImg from '@/assets/img/head_portrait.jpg';
 
-import { BaseChatMessage } from '@/models/chat-message.ts';
-import MessageBubble from './components/message-bubble.vue';
-import { nextTick, ref } from 'vue';
-import { animation } from '@/utils/util';
-import StatusSent from './components/status-sent.vue';
-import StatusSending from './components/status-sending.vue';
+import { BaseChatMessage } from "@/models/chat-message.ts";
+import MessageBubble from "./components/message-bubble.vue"
+import { nextTick, ref } from "vue";
+import { animation } from "@/utils/util";
 import StatusContainer from './components/status-container.vue';
 import { formatEpochTime } from '@/utils/message-time';
 
@@ -29,39 +27,34 @@ let chatList = props.messages;
 
 const sendText = () => {
   // console.log('*******sendTextTriggered')
-  if (inputText) {
-    let chatMsg = {
-      self: true,
-      content: inputText,
-      avatar: props.userAvatar || portraitImg,
-      status: 'SENT',
-      time: Date.now()
-    };
-    sendMsg(chatMsg);
-    // Emitting an event up to parent to reorder or do something when a new message is sent
-    //$emit('personCardSort', this.frinedInfo.id)
-    inputText = '';
-  } else {
-    toast.add({
-      severity: 'warn',
-      summary: '提示',
-      detail: '消息不能为空哦~',
-      life: 3000
-    });
-  }
-};
+      if (inputText) {
+        let chatMsg = {
+          self: true,
+          content: inputText,
+          avatar: props.userAvatar || portraitImg,
+          status: 'SENT',
+          time: Date.now()
+        };
+        sendMsg(chatMsg);
+        // Emitting an event up to parent to reorder or do something when a new message is sent
+        //$emit('personCardSort', this.frinedInfo.id)
+        inputText = "";
+      } else {
+        alert("消息不能为空哦~");
+      }
+    }
 
 const sendMsg = (message: BaseChatMessage) => {
-  chatList.push(message);
-  scrollBottom();
-};
+      chatList.push(message);
+      scrollBottom();
+    }
 
 const scrollBottom = () => {
-  nextTick(() => {
-    const scrollDom = scrollRef.value;
-    animation(scrollDom, scrollDom!.scrollHeight - scrollDom!.offsetHeight);
-  });
-};
+      nextTick(() => {
+        const scrollDom = scrollRef.value;
+        animation(scrollDom, scrollDom!.scrollHeight - scrollDom!.offsetHeight);
+      });
+    }
 </script>
 
 <template>
@@ -71,11 +64,11 @@ const scrollBottom = () => {
         <!-- SELF MESSAGE -->
         <div class="self" v-if="item.self">
           <span class="message-time text-slate-700 dark:text-white self-center">
-            {{ formatEpochTime(item.time) }}
+            {{formatEpochTime(item.time)}}
           </span>
           <div class="self-wrapper">
             <MessageBubble :content="item.content" :self="true" />
-            <StatusContainer :message="item" />
+            <StatusContainer :message="item"/>
           </div>
           <img class="avatar" :src="item.avatar" alt="" />
         </div>
@@ -85,10 +78,10 @@ const scrollBottom = () => {
           <img class="avatar" :src="item.avatar" alt="" />
           <div>
             <MessageBubble :content="item.content" :self="false" />
-            <StatusContainer :message="item" />
+            <StatusContainer :message="item"/>
           </div>
           <span class="message-time text-slate-700 dark:text-white self-center">
-            {{ formatEpochTime(item.time) }}
+            {{formatEpochTime(item.time)}}
           </span>
         </div>
       </li>
@@ -97,21 +90,25 @@ const scrollBottom = () => {
     <div class="input-mask"></div>
     <div class="input-mask-dark"></div>
     <div class="chat-inputs">
-      <div class="emoji boxinput" @click="">
-        <img src="@/assets/img/emoji/smiling-face.png" alt="" />
+        <div class="emoji boxinput" @click="">
+          <img src="@/assets/img/emoji/smiling-face.png" alt="" />
+        </div>
+        <div class="emoji-content">
+          <Emoji
+            v-show="undefined"
+            @sendEmoji=""
+            @closeEmoji=""
+          />
+        </div>
+        <!-- Text input box -->
+        <input class="inputs" v-model="inputText" @keyup.enter="sendText" />
+        <!-- Button to send text -->
+        <div class="send boxinput" @click="sendText">
+          <img src="@/assets/img/emoji/rocket.png" alt="" />
+        </div>
       </div>
-      <div class="emoji-content">
-        <Emoji v-show="undefined" @sendEmoji="" @closeEmoji="" />
-      </div>
-      <!-- Text input box -->
-      <input class="inputs" v-model="inputText" @keyup.enter="sendText" />
-      <!-- Button to send text -->
-      <div class="send boxinput" @click="sendText">
-        <img src="@/assets/img/emoji/rocket.png" alt="" />
-      </div>
-    </div>
-    <Toast position="top-center" />
   </div>
+
 </template>
 
 <style scoped>
@@ -120,15 +117,15 @@ const scrollBottom = () => {
 @layer components {
   .message-box {
     scrollbar-gutter: stable;
-    @apply p-8 h-full overflow-y-auto;
+    @apply p-8 h-full overflow-y-auto
   }
 
   .message-box::-webkit-scrollbar {
-    @apply w-2 h-1 dark:bg-ultramarine-900 bg-slate-200;
+    @apply w-2 h-1 dark:bg-ultramarine-900 bg-slate-200
   }
 
   .message-box::-webkit-scrollbar-thumb {
-    @apply dark:bg-slate-200 bg-white rounded-full;
+    @apply dark:bg-slate-200 bg-white rounded-full
   }
 
   .chat-content {
@@ -163,7 +160,6 @@ const scrollBottom = () => {
   .input-mask {
     @apply absolute bottom-0 left-0 w-[calc(100%-0.5rem)] h-28 pointer-events-none to-transparent dark:bg-gradient-to-t dark:from-ultramarine-900 dark:via-ultramarine-900/80 opacity-0 dark:opacity-100 transition-opacity duration-300;
   }
-
   .input-mask-dark {
     @apply absolute bottom-0 left-0 w-[calc(100%-0.5rem)] h-28 pointer-events-none to-transparent bg-gradient-to-t from-slate-200 via-slate-200/80 opacity-100 dark:opacity-0 transition-opacity duration-300;
   }
@@ -173,7 +169,6 @@ const scrollBottom = () => {
 
     .boxinput {
       @apply w-[50px] h-[50px] bg-[rgb(66,70,86)] rounded-[15px] border border-[rgb(80,85,103)] relative cursor-pointer;
-
       img {
         @apply w-[30px] h-[30px] absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2;
       }
@@ -181,7 +176,6 @@ const scrollBottom = () => {
 
     .emoji {
       @apply transition-all duration-300;
-
       &:hover {
         @apply bg-[rgb(46,49,61)] border border-[rgb(71,73,82)];
       }
@@ -189,7 +183,6 @@ const scrollBottom = () => {
 
     .inputs {
       @apply w-[90%] h-[50px] bg-slate-300 dark:bg-[rgb(66,70,86)] rounded-[15px] border-2 border-[rgb(34,135,225)] px-[10px] box-border transition duration-200 text-[20px] text-white font-light mx-[20px];
-
       &:focus {
         @apply outline-none;
       }

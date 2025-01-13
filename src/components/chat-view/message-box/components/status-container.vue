@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { BaseChatMessage } from '@/models';
-import StatusSent from './status-sent.vue';
+import StatusSent from './status-read.vue';
 import StatusUnread from './status-unread.vue';
 import StatusSending from './status-sending.vue';
 
@@ -14,7 +14,7 @@ const props = defineProps<StatusProps>();
 <template>
     <div v-if="message.self === false" class="hidden">
     </div>
-    <div v-else-if="message.status === 'SENT'">
+    <div v-else-if="message.status === 'READ'">
         <StatusSent/>
     </div>
     <div v-else-if="message.status === 'UNREAD'">

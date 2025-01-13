@@ -7,7 +7,7 @@ import { useLayoutStore, useUserStore } from '@/store';
 import { formatEpochTime } from '@/utils/message-time';
 
 type SidebarProps = {};
-const props = withDefaults(defineProps<SidebarProps>(),{});
+const props = withDefaults(defineProps<SidebarProps>(), {});
 
 // UI
 const layoutStore = useLayoutStore();
@@ -18,23 +18,23 @@ const iconWithStyle = (iconName: string): string[] => [icon(iconName)];
 const mouseEnterTimeout = ref<any>(null);
 const mouseLeaveTimeout = ref<any>(null);
 const handleHoverAvatar = () => {
-  if(mouseLeaveTimeout.value) {
+  if (mouseLeaveTimeout.value) {
     clearTimeout(mouseLeaveTimeout.value);
     mouseLeaveTimeout.value = null;
   }
   mouseEnterTimeout.value = setTimeout(() => {
     showCardio.value = true;
   }, 500);
-}
+};
 const handleLeaveAvatar = () => {
-  if(mouseEnterTimeout.value) {
+  if (mouseEnterTimeout.value) {
     clearTimeout(mouseEnterTimeout.value);
     mouseEnterTimeout.value = null;
   }
   mouseLeaveTimeout.value = setTimeout(() => {
     showCardio.value = false;
   }, 50);
-}
+};
 
 // Routing
 const router = useRouter();
@@ -63,12 +63,10 @@ const formattedSex = computed(() => {
 });
 
 const formattedLoginTime = computed(() => {
-  if(userInfo.latestLoginAt === 0) return '请登录';
+  if (userInfo.latestLoginAt === 0) return '请登录';
   const loginTime = formatEpochTime(userInfo.latestLoginAt);
   return loginTime;
-})
-
-
+});
 </script>
 
 <template>
@@ -84,9 +82,22 @@ const formattedLoginTime = computed(() => {
   </transition>
   <div class="sidebar">
     <div class="logo" @click="handleClick('home')">ChatoYo</div>
-    <div class="avatar-box w-full flex flex-col items-center" @mouseenter="handleHoverAvatar" @mouseleave="handleLeaveAvatar">
-      <div class="avatar" :class="isActive('setting')" @click="()=>{handleClick('setting'); handleLeaveAvatar()}">
-        <img class="avatar-img" :src="userInfo.avatar" alt="avatar-test.jpg"/>
+    <div
+      class="avatar-box hidden md:w-full md:flex md:flex-col md:items-center"
+      @mouseenter="handleHoverAvatar"
+      @mouseleave="handleLeaveAvatar"
+    >
+      <div
+        class="avatar"
+        :class="isActive('setting')"
+        @click="
+          () => {
+            handleClick('setting');
+            handleLeaveAvatar();
+          }
+        "
+      >
+        <img class="avatar-img" :src="userInfo.avatar" alt="avatar-test.jpg" />
       </div>
     </div>
 
@@ -119,26 +130,26 @@ const formattedLoginTime = computed(() => {
 @layer components {
   .sidebar {
     @apply w-screen h-[4.5rem] flex px-2 flex-row items-center gap-8 overflow-x-clip transition-none transition-colors
-		bg-amber-50 dark:bg-ultramarine-700
-		md:flex-col md:h-full md:py-8 md:w-28 md:px-0;
+    bg-amber-50 dark:bg-ultramarine-700
+    md:flex-col md:h-full md:py-8 md:w-28 md:px-0;
   }
 
   .logo {
     @apply uppercase select-none cursor-pointer font-extrabold hidden
-		text-lotus dark:text-emerald-accent
-		md:block;
+    text-lotus dark:text-emerald-accent
+    md:block;
   }
 
   .avatar {
     @apply hidden justify-center items-center h-16 w-fit cursor-pointer py-2 rounded-full
-		md:w-full md:inline-flex
-		hover:bg-slate-300/50
-		transition-all duration-300;
+    md:w-full md:inline-flex
+    hover:bg-slate-300/50
+    transition-all duration-300;
 
     &.active-item {
       @apply hover:text-white rounded-none
-			bg-lotus dark:bg-emerald-500
-			md:px-0 md:w-[150%];
+      bg-lotus dark:bg-emerald-500
+      md:px-0 md:w-[150%];
 
       /*应该清除和未选中状态下互斥的样式*/
     }
@@ -151,35 +162,36 @@ const formattedLoginTime = computed(() => {
 
     .avatar-img {
       @apply rounded-[50%] aspect-square h-[95%]
-			hover:h-full
-			transition-all duration-300;
+      hover:h-full
+      transition-all duration-300;
     }
   }
 
   .nav-container {
     @apply flex flex-row w-full justify-between items-center flex-1
-		md:flex-col md:gap-2 md:justify-start;
+    md:flex-col md:gap-2 md:justify-start;
 
     .nav {
       @apply py-4 px-12 cursor-pointer transition-all duration-300 rounded-full inline-flex justify-center items-center
-			md:px-6 md:h-16 md:w-16
-			text-lotus dark:text-white
-			hover:text-emerald-500 hover:bg-slate-300/50;
+      md:px-6 md:h-16 md:w-16
+      text-lotus dark:text-white
+      hover:text-emerald-500 hover:bg-slate-300/50;
 
       &.active-item {
         @apply bg-lotus text-white dark:bg-emerald-500 dark:hover:text-white
-				md:px-0 md:w-[150%];
+        md:px-0 md:w-[150%];
       }
     }
   }
 
   .skin-toggle {
     @apply py-4 px-12 cursor-pointer transition-all duration-300 rounded-full justify-center items-center
-		hidden md:inline-flex
-		md:px-6 md:h-16 md:w-16
-		text-lotus dark:text-white
-		hover:text-emerald-500 hover:bg-slate-300/50;
+    hidden md:inline-flex
+    md:px-6 md:h-16 md:w-16
+    text-lotus dark:text-white
+    hover:text-emerald-500 hover:bg-slate-300/50;
   }
+
   .login-card {
     @apply bg-white cursor-pointer rounded-lg shadow-[2px_1px_3px_1px_rgba(0,0,0,0.07),-2px_1px_3px_1px_rgba(0,0,0,0.07)] p-4 flex gap-4 items-center absolute min-w-48 max-w-fit h-28 left-[7.4rem] top-[5.5rem] z-10;
 

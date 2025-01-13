@@ -26,6 +26,7 @@ const date = ref('');
       </div>
     </div>
     <div class="flex gap-2">
+      <DatePicker v-model="date" inline show-week class="flex-1" />
       <Listbox
         v-model="finishedList"
         :options="cities"
@@ -39,7 +40,6 @@ const date = ref('');
           <MuiEmpty />
         </template>
       </Listbox>
-      <DatePicker v-model="date" inline show-week class="flex-1" />
     </div>
   </div>
 </template>
@@ -55,12 +55,15 @@ const date = ref('');
   :deep(.p-listbox-list-container) {
     @apply dark:bg-rose-400/50 max-h-[none];
   }
+
   :deep(.p-datepicker) {
     @apply border-none;
   }
+
   :deep(.p-datepicker-panel) {
     @apply dark:bg-rose-700/50 bg-rose-400/50;
   }
+
   :deep(.p-datepicker-header) {
     @apply dark:bg-rose-800 bg-rose-600;
   }

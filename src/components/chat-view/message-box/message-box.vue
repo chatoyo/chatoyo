@@ -5,10 +5,9 @@ import { BaseChatMessage } from "@/models/chat-message.ts";
 import MessageBubble from "./components/message-bubble.vue"
 import { nextTick, ref } from "vue";
 import { animation } from "@/utils/util";
-import StatusSent from "./components/status-sent.vue";
-import StatusSending from "./components/status-sending.vue";
 import StatusContainer from './components/status-container.vue';
 import { formatEpochTime } from '@/utils/message-time';
+import Emoji from './components/emoji.vue';
 
 type MessageBoxProps = {
   messages: Array<BaseChatMessage>;
@@ -31,7 +30,7 @@ const sendText = () => {
           self: true,
           content: inputText,
           avatar: props.userAvatar || portraitImg,
-          status: 'SENT',
+          status: 'READ',
           time: Date.now()
         };
         sendMsg(chatMsg);
@@ -48,56 +47,100 @@ const sendMsg = (message: BaseChatMessage) => {
       scrollBottom();
     }
 
+const sendEmoji = (emoji: string) => {
+        let chatMsg = {
+          self: true,
+          content: emoji,
+          avatar: props.userAvatar || portraitImg,
+          status: 'READ',
+          time: Date.now(),
+          type: 1 as const,
+        };
+      sendMsg(chatMsg);
+      clickEmoji();
+    }
+const showEmoji = ref(false);
+const clickEmoji = () => {
+      showEmoji.value = !showEmoji.value;
+    }
+
 const scrollBottom = () => {
       nextTick(() => {
         const scrollDom = scrollRef.value;
-        animation(scrollDom, scrollDom!.scrollHeight - scrollDom!.offsetHeight);
+        animation(scrollDom, scrollDom!.scrollHeight - scrollDom!.clientHeight);
       });
     }
+
+let lastMessageTime = 0;
+let lastDividerTime = 0;
+
+const hasDivider = (time: number | undefined, index: number) => {
+  if(!time) return false;
+
+  if(index === 0 // 第一条消息
+    || time - lastMessageTime >= 600000 // 距离上次消息超过10分钟
+    || (time - lastDividerTime >= 360000 && (time / 60000 | 0) > lastMessageTime / 60000)) { // 距离上个DividerTime超过6分钟，且确保上个消息和此条消息不在一个分钟内（比如都在22:59）
+    lastDividerTime = time;
+    lastMessageTime = time;
+    return true;
+  }
+  lastMessageTime = time;
+  return false;
+};
+
 </script>
 
 <template>
   <div class="message-box" ref="scrollRef">
+    
     <ul class="chat-content">
-      <li class="message" v-for="(item, index) in props.messages" :key="index">
+      <li v-for="(item, index) in props.messages" :key="index" class="flex flex-col" :class="{'items-end': item.self}">
+        <div class="time-divider" v-if="hasDivider(item.time, index)">{{formatEpochTime(item.time)}}</div>
+
         <!-- SELF MESSAGE -->
-        <div class="self" v-if="item.self">
-          <span class="message-time text-slate-700 dark:text-white self-center">
+        <div class="message self" v-if="item.self">
+          <span class="pr-8"></span>
+          <span class="message-time pb-[1.4rem]">
             {{formatEpochTime(item.time)}}
           </span>
-          <div class="self-wrapper">
-            <MessageBubble :content="item.content" :self="true" />
+          <div class="bubble-wrapper self">
+            <MessageBubble :content="item.content" :self="true" :type="item.type"/>
             <StatusContainer :message="item"/>
           </div>
           <img class="avatar" :src="item.avatar" alt="" />
         </div>
 
         <!-- OTHER MESSAGE -->
-        <div class="other" v-else>
+        <div class="message other" v-else>
           <img class="avatar" :src="item.avatar" alt="" />
-          <div>
-            <MessageBubble :content="item.content" :self="false" />
+          <div class="bubble-wrapper other">
+            <MessageBubble :content="item.content" :self="false" :type="item.type"/>
             <StatusContainer :message="item"/>
           </div>
-          <span class="message-time text-slate-700 dark:text-white self-center">
+          <span class="message-time">
             {{formatEpochTime(item.time)}}
           </span>
+          <span class="pl-8"></span>
         </div>
       </li>
-      <div class="h-32"></div>
+      <div class="h-36"></div>
     </ul>
+
     <div class="input-mask"></div>
     <div class="input-mask-dark"></div>
+
     <div class="chat-inputs">
-        <div class="emoji boxinput" @click="">
+        <div class="emoji boxinput" @click="clickEmoji">
           <img src="@/assets/img/emoji/smiling-face.png" alt="" />
         </div>
         <div class="emoji-content">
-          <Emoji
-            v-show="undefined"
-            @sendEmoji=""
-            @closeEmoji=""
-          />
+          <transition name="fade">
+            <Emoji
+              v-show="showEmoji"
+              @sendEmoji="sendEmoji"
+              @closeEmoji="clickEmoji"
+            />
+          </transition>
         </div>
         <!-- Text input box -->
         <input class="inputs" v-model="inputText" @keyup.enter="sendText" />
@@ -120,7 +163,7 @@ const scrollBottom = () => {
   }
 
   .message-box::-webkit-scrollbar {
-    @apply w-2 h-1 dark:bg-ultramarine-900 bg-slate-200
+    @apply w-2 h-0 dark:bg-ultramarine-900 bg-slate-200
   }
 
   .message-box::-webkit-scrollbar-thumb {
@@ -128,28 +171,56 @@ const scrollBottom = () => {
   }
 
   .chat-content {
-    @apply space-y-5 flex flex-col gap-x-2 sm:gap-x-4;
+    @apply flex flex-col gap-x-2 sm:gap-x-4;
+  }
+
+  .time-divider {
+    @apply self-center dark:text-slate-200 text-purple-800 mt-4 mb-2 drop-shadow-[0_0_2px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_0_2px_rgba(255,255,255,0.35)];
   }
 
   .message {
-    @apply grow;
-  }
+    @apply grow my-3 relative z-0 flex gap-3;
 
-  .self {
-    @apply flex gap-2 w-full justify-end space-y-3;
-  }
+    .message-time {
+      @apply text-slate-700 dark:text-white self-center -z-20 opacity-0;
+      transition: opacity 0.3s ease 50ms, transform 0.2s ease-in-out 100ms;
+    }
 
-  .other {
-    @apply max-w-lg me-11 flex gap-2;
+    &.self {
+      @apply w-full justify-end;
+
+      .message-time {
+        @apply translate-x-12;
+      }
+
+      &:hover {
+        .message-time {
+          @apply -translate-x-3 opacity-100;
+        }
+      }
+    }
+
+    &.other {
+      @apply me-11;
+
+      .message-time {
+        @apply -translate-x-12;
+      }
+
+      &:hover {
+        .message-time {
+          @apply translate-x-3 opacity-100;
+        }
+      }
+    }
   }
 
   .avatar {
     @apply inline-block size-9 rounded-full bg-white;
   }
 
-  /* Self (sender) styles */
-  .self-wrapper {
-    @apply inline-flex flex-col justify-end;
+  .bubble-wrapper {
+    @apply inline-flex flex-col -z-10;
   }
 
   .status {
@@ -174,10 +245,19 @@ const scrollBottom = () => {
     }
 
     .emoji {
-      @apply transition-all duration-300;
+      @apply transition-all duration-300 bg-slate-200 dark:bg-[rgb(66,70,86)] border-2 border-[rgba(71,73,82,0.7)];
       &:hover {
-        @apply bg-[rgb(46,49,61)] border border-[rgb(71,73,82)];
+        @apply bg-yellow-50 dark:bg-[rgb(46,49,61)] ;
       }
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+      @apply transition-opacity duration-150;
+    }
+    .fade-enter-from,
+    .fade-leave-to {
+      @apply opacity-0;
     }
 
     .inputs {

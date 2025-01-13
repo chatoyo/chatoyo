@@ -4,6 +4,7 @@ import AutoImport from 'unplugin-auto-import/vite';
 import { fileURLToPath, URL } from 'node:url';
 import { viteMockServe } from 'vite-plugin-mock';
 import { devServerOptions } from './config/dev.ts';
+import { ngrok } from 'vite-plugin-ngrok'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -19,7 +20,8 @@ export default defineConfig({
     viteMockServe({
       mockPath: 'mock',
       enable: true
-    })
+    }),
+    ngrok(),
   ],
   resolve: {
     alias: {

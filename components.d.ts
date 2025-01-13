@@ -13,9 +13,11 @@ declare module 'vue' {
     ChatsList: typeof import('./src/components/chats-list/chats-list.vue')['default']
     ChatView: typeof import('./src/components/chat-view/chat-view.vue')['default']
     ChatViewHeader: typeof import('./src/components/chat-view/header/chat-view-header.vue')['default']
+    DatePicker: typeof import('primevue/datepicker')['default']
     Empty: typeof import('./src/components/list/empty.vue')['default']
     Knob: typeof import('primevue/knob')['default']
     LabeledToggle: typeof import('./src/components/minor-custom/labeled-toggle.vue')['default']
+    Listbox: typeof import('primevue/listbox')['default']
     MessageBox: typeof import('./src/components/chat-view/message-box/message-box.vue')['default']
     MessageBubble: typeof import('./src/components/chat-view/message-box/components/message-bubble.vue')['default']
     NewsPanel: typeof import('./src/components/home/news-panel.vue')['default']
@@ -26,5 +28,9 @@ declare module 'vue' {
     StatusSending: typeof import('./src/components/chat-view/message-box/components/status-sending.vue')['default']
     StatusSent: typeof import('./src/components/chat-view/message-box/components/status-sent.vue')['default']
     StatusUnread: typeof import('./src/components/chat-view/message-box/components/status-unread.vue')['default']
+    Toast: typeof import('primevue/toast')['default']
+  }
+  export interface ComponentCustomProperties {
+    Tooltip: typeof import('primevue/tooltip')['default']
   }
 }

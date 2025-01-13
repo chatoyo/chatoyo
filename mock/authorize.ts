@@ -11,11 +11,14 @@ const generateMockData = (): LoginInfo => ({
   latestLoginAt: faker.date.between({ from: '2025-01-01', to: Date.now() })
 });
 
-export default [
+const mockMethods: MockMethod[] = [
   {
     url: '/api/auth/login',
     method: 'get',
+    timeout: 500,
     statusCode: 200,
     response: generateMockData()
-  }
-] as MockMethod[];
+  },
+]
+
+export default mockMethods;

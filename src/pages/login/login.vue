@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import googleIcon from '@assets/img/google.png';
+import { onMounted, ref } from 'vue';
+import { useUserStore } from '@/store';
+import { getJSON } from '@/request/main';
+
 const router = useRouter();
 
 interface LoginForm {
@@ -16,6 +21,50 @@ const loginHandler = () => {
   // TODO: redirect
   redirect('home');
 };
+
+const isLogging = ref(true);
+const handleClickGoogle = () => {
+  window.location.href = '/api/auth/google';
+}
+
+type GoogleUserInfo = {
+    sub: string,
+    name: string,
+    given_name: string,
+    family_name: string,
+    picture: string, // url
+    email: string,
+    email_verified: boolean
+}
+
+onMounted(async () => {
+  try {
+    const { data } = await getJSON({
+      url: '/api/user/userInfo',
+    });
+
+    const { user_info: userInfo } = data as { user_info?: GoogleUserInfo };
+
+    if (!userInfo) {
+      throw new Error('Parsing failed: user_info is undefined');
+    }
+
+    const userStore = useUserStore();
+    userStore.setUserInfo({
+      id: Number(userInfo.sub),
+      name: userInfo.name,
+      sex: 1,
+      avatar: userInfo.picture,
+      latestLoginAt: Date.now(),
+    });
+
+    redirect('home');
+  } catch (error) {
+    console.error('Error Parsing User Info:', error);
+  } finally {
+    isLogging.value = false;
+  }
+});
 </script>
 
 <template>
@@ -77,9 +126,15 @@ const loginHandler = () => {
           </div>
         </div>
       </form>
-
+      <div class="btn btn-google" @click="handleClickGoogle">
+        <img :src="googleIcon"/>
+        <span>通过 Google 登陆</span>
+      </div>
       <div class="submit-btn">
-        <button type="submit" class="btn btn-login" @click="loginHandler">登陆</button>
+        <button type="submit" class="btn btn-login" @click="loginHandler">
+          登陆
+          <i v-if="isLogging" class="pi pi-spin pi-spinner"></i>
+        </button>
         <button type="button" class="btn btn-reset-pwd" @click="redirect('reset-password')">重置密码</button>
       </div>
     </div>
@@ -111,11 +166,11 @@ const loginHandler = () => {
   }
 
   .btn {
-    @apply w-full py-3 px-4 inline-flex justify-center duration-300 items-center text-sm font-medium rounded-lg;
+    @apply w-full inline-flex justify-center duration-300 gap-3 text-sm items-center font-medium rounded-lg;
   }
 
   .btn-login {
-    @apply border border-transparent
+    @apply border border-transparent h-11
 		bg-teal-500 text-white
 		hover:bg-teal-600
 		focus:outline-none focus:bg-teal-600
@@ -123,11 +178,20 @@ const loginHandler = () => {
   }
 
   .btn-reset-pwd {
-    @apply border border-transparent
+    @apply border border-transparent h-11
 		bg-blue-500 text-white
 		hover:bg-blue-600
 		focus:outline-none focus:bg-blue-600
 		disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-google{
+      @apply w-full h-11 flex items-center justify-start gap-6 mt-6 
+      bg-lightBlue-100 border-2 border-slate-200 rounded-lg
+      text-slate-600 hover:bg-lightBlue-300;
+      img {
+        @apply h-[72%] ml-4;
+      }
   }
 }
 </style>

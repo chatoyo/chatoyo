@@ -10,7 +10,10 @@ export const useHomePageStore = defineStore('homePageStore', {
       this.selectedChat = savedChat;
     }
   },
-  persist: true
+  persist: {
+    enabled: true,
+    storage: sessionStorage
+  }
 });
 
 export const useChannelPageStore = defineStore('channelPageStore', {
@@ -22,5 +25,8 @@ export const useChannelPageStore = defineStore('channelPageStore', {
       this.selectedChat = savedChat;
     }
   },
-  persist: true
+  persist: {
+    enabled: true,
+    storage: sessionStorage
+  }
 });

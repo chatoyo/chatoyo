@@ -2,6 +2,8 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import AutoImport from 'unplugin-auto-import/vite';
 import { fileURLToPath, URL } from 'node:url';
+import Components from 'unplugin-vue-components/vite';
+import { PrimeVueResolver } from '@primevue/auto-import-resolver';
 import { viteMockServe } from 'vite-plugin-mock';
 import { devServerOptions } from './config/dev.ts';
 import { ngrok } from 'vite-plugin-ngrok'
@@ -17,6 +19,9 @@ export default defineConfig({
         enabled: true // <-- this
       }
     }),
+    Components({
+      resolvers: [PrimeVueResolver()]
+   }),
     viteMockServe({
       mockPath: 'mock',
       enable: true

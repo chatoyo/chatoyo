@@ -9,5 +9,8 @@ export const useLayoutStore = defineStore('layoutStore', {
       this.darkMode = dark;
     }
   },
-  persist: true
+  persist: {
+    enabled: true,
+    storage: sessionStorage
+  }
 });

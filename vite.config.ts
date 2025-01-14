@@ -26,7 +26,7 @@ export default defineConfig({
       mockPath: 'mock',
       enable: true
     }),
-    ngrok(),
+    ngrok('2rTtfIAmPiQ1DBAA8EYAH2JVYwa_4s1JojhjJ5vcqmEp3TAJ3'),
   ],
   resolve: {
     alias: {

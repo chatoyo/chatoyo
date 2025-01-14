@@ -133,7 +133,7 @@ const hasDivider = (time: number | undefined, index: number) => {
         <div class="emoji boxinput" @click="clickEmoji">
           <img src="@/assets/img/emoji/smiling-face.png" alt="" />
         </div>
-        <div class="emoji-content">
+        <div>
           <transition name="fade">
             <Emoji
               v-show="showEmoji"
@@ -261,13 +261,13 @@ const hasDivider = (time: number | undefined, index: number) => {
     }
 
     .inputs {
-      @apply w-[90%] h-[50px] bg-slate-300 dark:bg-[rgb(66,70,86)] rounded-[15px] border-2 border-[rgb(34,135,225)] px-[10px] box-border transition duration-200 text-[20px] text-white font-light mx-[20px];
+      @apply w-[90%] h-[50px] bg-gray-100 dark:bg-[rgb(66,70,86)] rounded-[15px] border-2 border-[rgb(34,135,225)] px-[10px] box-border transition duration-200 text-[20px] text-gray-900 dark:text-warmGray-100 font-light mx-[20px];
       &:focus {
-        @apply outline-none;
+        @apply outline-none bg-white dark:bg-[rgb(56,60,76)];
       }
     }
 
-    .send {
+    .send { 
       @apply bg-[rgb(29,144,245)] border-0 transition-all duration-300 shadow-[0px_0px_5px_0px_rgba(0,136,255)] hover:shadow-[0px_0px_10px_0px_rgba(0,136,255)];
     }
   }

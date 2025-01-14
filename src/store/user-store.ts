@@ -36,18 +36,5 @@ export const useUserStore = defineStore('user', {
       this.userInfo = defaultUserInfo;
       this.isAuthenticated = false;
     },
-
-    async fetchUserInfo() {
-      try {
-        const response = await fetch('/api/user');
-        if (!response.ok) {
-          throw new Error('Failed to fetch user info');
-        }
-        const data = await response.json();
-        this.setUserInfo(data);
-      } catch (error) {
-        console.error(error);
-      }
-    },
   },
 });

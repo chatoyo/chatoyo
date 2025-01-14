@@ -1,12 +1,13 @@
 
-import { LoginInfo } from '@/models/user';
-import { defineStore } from 'pinia';
+import { BackendUser, LoginInfo } from '@/models/user';
+import { getJSON } from '@/request/main';
+import { defineStore, Store } from 'pinia';
 
 const defaultUserInfo : LoginInfo = {
-  id: -1,
+  id: '-1',
   name: '未知用户 请登录',
-  avatar: '/images/avatar-test.jpg',
-  sex: 2, // undefined
+  picture: '/images/avatar-test.jpg',
+  gender: 2, // undefined
   latestLoginAt: 0
 };
 
@@ -19,9 +20,14 @@ export const useUserStore = defineStore('user', {
   }),
 
   getters: {
-    getUserName: (state) => state.userInfo.name ?? '未登录',
-    getUserAvatar: (state) => state.userInfo.avatar ?? undefined,
-    getUser: (state) => state.userInfo
+    getAuthenticated: (state) => state.isAuthenticated,
+    getUserName: (state) => state.userInfo.name,
+    getUserAvatar: (state) => state.userInfo.picture,
+    getUser: (state) => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      if(!state.isAuthenticated) requestUserInfo(null);
+      return state.userInfo;
+    }
   },
 
   actions: {
@@ -38,3 +44,24 @@ export const useUserStore = defineStore('user', {
     },
   },
 });
+
+export const requestUserInfo = async (userStore: unknown) => { 
+  const { data } = await getJSON({
+    url: '/api/user/me',
+  });
+
+  const { user } = data as { user?: BackendUser };
+
+  if (!user) {
+    throw new Error('Oops! User have to manually login.'); // Error handled on top
+  }
+  const store = userStore ?? useUserStore();
+  store.setUserInfo({
+    id: user.id,
+    picture: user.picture,
+    name: user.name,
+    latestLoginAt: Date.now(),
+    gender: user.gender ? Number(user.gender) : 0,
+    data: user
+  });
+}

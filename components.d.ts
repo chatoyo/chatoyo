@@ -33,6 +33,7 @@ declare module 'vue' {
     StatusRead: typeof import('./src/components/chat-view/message-box/components/status-read.vue')['default']
     StatusSending: typeof import('./src/components/chat-view/message-box/components/status-sending.vue')['default']
     StatusUnread: typeof import('./src/components/chat-view/message-box/components/status-unread.vue')['default']
+    Toast: typeof import('primevue/toast')['default']
     TodoList: typeof import('./src/components/home/todo-list.vue')['default']
   }
   export interface ComponentCustomProperties {

@@ -39,15 +39,15 @@ const data = ref([
 </script>
 
 <template>
-  <div class="achievement-component">
-    <div class="title bg-indigo-500 border-[1px] border-indigo-700 rounded-sm p-1 inline-flex items-center">
-      <div class="flex-1 text-xl font-semibold text-indigo-100">快捷小程序</div>
+  <div class="mp-component">
+    <div class="title rounded-sm p-1 inline-flex items-center">
+      <div class="flex-1 text-lg font-semibold text-indigo-100">快捷小程序</div>
       <div class="flex items-center justify-center text-indigo-100 cursor-pointer">
         <span>更多</span>
         <span :class="icon('angle-right')" />
       </div>
     </div>
-    <ul class="achievement-list">
+    <ul class="mp-list">
       <li v-for="(item, index) in data.slice(0, 5)" :key="index" class="item">
         <span :class="icon(item.icon)" class="!text-3xl" />
         <div class="flex flex-col gap-1">
@@ -62,17 +62,21 @@ const data = ref([
 <style scoped lang="scss">
 @tailwind components;
 @layer components {
-  .achievement-component {
-    @apply md:h-40 bg-indigo-900 /*dark:bg-orange-500*/
-    w-full rounded-md flex flex-col justify-center
-    p-2;
+  .mp-component {
+    @apply md:h-40 dark:bg-[#27293d]
+		w-full rounded-md flex flex-col justify-center
+		p-2;
   }
 
-  .achievement-list {
+  .mp-list {
     @apply mt-2 flex-1  flex-row flex-wrap gap-2 grid grid-cols-5;
 
     .item {
-      @apply flex items-center gap-6 rounded-sm p-4 bg-gradient-to-b from-indigo-700 to-indigo-500 text-indigo-100;
+      @apply flex items-center gap-6 rounded-sm p-4
+			cursor-pointer select-none
+			bg-gradient-to-t from-indigo-700 to-indigo-500 text-indigo-100
+			duration-300
+			hover:scale-105;
     }
   }
 }

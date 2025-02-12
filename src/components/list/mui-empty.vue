@@ -3,7 +3,7 @@
 <template>
   <div class="mui-empty">
     <img alt="列表为空" src="@assets/img/empty/empty.jpg" class="w-[40%]" />
-    <div class="">列表为空</div>
+    <div class="text-slate-100">列表为空</div>
   </div>
 </template>
 

@@ -1,5 +1,3 @@
-<!-- Cardio Component -->
-<!-- Named by Archie Xing -->
 <script setup lang="ts">
 import { useModeStore } from '@store/mode-store.ts';
 import Toggle from '@components/minor-custom/labeled-toggle.vue';
@@ -27,7 +25,6 @@ const sexSymbol = {
 const modeStore = useModeStore();
 const workMode = ref<boolean>(modeStore.mode === 'WORK');
 const username = computed(() => (workMode.value ? props.name : props.nickname));
-watch(workMode, () => (modeStore.mode = workMode.value ? 'WORK' : 'REST'));
 </script>
 
 <template>
@@ -54,7 +51,7 @@ watch(workMode, () => (modeStore.mode = workMode.value ? 'WORK' : 'REST'));
     </div>
     <div class="mode-toggle">
       <div class="relative flex flex-col flex-wrap items-center gap-2">
-        <Toggle id="id-c04" v-model="workMode" :disabled="false"> 工作模式</Toggle>
+        <Toggle id="id-c04" v-model="workMode">工作模式</Toggle>
       </div>
     </div>
   </div>

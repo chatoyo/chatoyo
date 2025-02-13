@@ -6,11 +6,12 @@ import primeui from 'tailwindcss-primeui';
 /** @type {import('tailwindcss').Config} */
 
 export default {
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}', './style.css'],
   theme: {
     extend: {
       fontFamily: {
-        sans: ['InterVariable', ...defaultTheme.fontFamily.sans]
+        sans: ['InterVariable', ...defaultTheme.fontFamily.sans],
+        fontFeatureSettings: '`cv02` !important'
       }
     },
     colors: {
@@ -20,7 +21,8 @@ export default {
       'ultramarine-700': '#04263E',
       lotus: '#8b2671', // 青莲
       'emerald-accent': '#12D989',
-      'sunrise-white': '#f7f4ed'
+      'sunrise-white': '#f7f4ed',
+      'dark-bg': '#1e1e2f'
     }
   },
 

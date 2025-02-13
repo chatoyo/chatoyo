@@ -8,12 +8,14 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Achievement: typeof import('./src/components/home/achievement.vue')['default']
+    Badge: typeof import('primevue/badge')['default']
     BulletinBoardRecommend: typeof import('./src/components/channel/bulletin-board-recommend.vue')['default']
+    Button: typeof import('primevue/button')['default']
+    Cardio: typeof import('./src/components/profile/cardio.vue')['default']
     Carousel: typeof import('./src/components/channel/carousel.vue')['default']
     ChatsList: typeof import('./src/components/chats-list/chats-list.vue')['default']
     ChatView: typeof import('./src/components/chat-view/chat-view.vue')['default']
     ChatViewHeader: typeof import('./src/components/chat-view/header/chat-view-header.vue')['default']
-    DatePicker: typeof import('primevue/datepicker')['default']
     Emoji: typeof import('./src/components/chat-view/message-box/components/emoji.vue')['default']
     FileBox: typeof import('./src/components/home/file-box.vue')['default']
     Knob: typeof import('primevue/knob')['default']
@@ -22,9 +24,10 @@ declare module 'vue' {
     MessageBox: typeof import('./src/components/chat-view/message-box/message-box.vue')['default']
     MessageBubble: typeof import('./src/components/chat-view/message-box/components/message-bubble.vue')['default']
     Microprogram: typeof import('./src/components/home/microprogram.vue')['default']
+    MuiCard: typeof import('./src/components/minor-custom/mui-card.vue')['default']
     MuiEmpty: typeof import('./src/components/list/mui-empty.vue')['default']
     NewsPanel: typeof import('./src/components/channel/news-panel.vue')['default']
-    ProfileBar: typeof import('./src/components/profile-bar.vue')['default']
+    ProfileBar: typeof import('./src/components/profile/profile-bar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./src/components/layout/sidebar.vue')['default']
@@ -33,6 +36,7 @@ declare module 'vue' {
     StatusRead: typeof import('./src/components/chat-view/message-box/components/status-read.vue')['default']
     StatusSending: typeof import('./src/components/chat-view/message-box/components/status-sending.vue')['default']
     StatusUnread: typeof import('./src/components/chat-view/message-box/components/status-unread.vue')['default']
+    Toast: typeof import('primevue/toast')['default']
     TodoList: typeof import('./src/components/home/todo-list.vue')['default']
   }
   export interface ComponentCustomProperties {

@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import Cardio from '@components/profile-bar.vue';
-import NewsPanel from '@components/channel/news-panel.vue';
-import BulletinBoardRecommend from '@components/channel/bulletin-board-recommend.vue';
-
 import { onUnmounted, reactive, ref } from 'vue';
 
 import { ChatItem, BaseChatMessage } from '@/models';
@@ -67,17 +63,21 @@ onUnmounted(() => {
       <ChatView :current-chat="state.selectedChat" :messages="chatLog" />
       <div class="md:hidden" @click="showChats">打开消息列表</div>
     </div>
-    <div v-else class="main-container sm:p-4 scrollable">
-      <Cardio />
-      <div class="flex justify-start gap-2">
+    <div v-else class="main-container p-3 scrollable">
+      <ProfileBar />
+      <div class="flex justify-start gap-3">
         <Status />
         <Achievement />
       </div>
-      <div class="flex justify-start gap-2">
-        <TodoList />
-        <FileBox />
+      <div class="flex justify-start flex-wrap -mx-1.5">
+        <div class="w-full md:basis-7/12 px-1.5">
+          <TodoList />
+        </div>
+        <div class="w-full md:basis-5/12 px-1.5">
+          <FileBox />
+        </div>
       </div>
-      <div class="flex justify-start gap-2">
+      <div class="flex justify-start gap-3">
         <Microprogram />
       </div>
     </div>
@@ -93,13 +93,13 @@ onUnmounted(() => {
 
   .chats-list-container {
     @apply w-full h-full
-    md:w-[20rem] md:block;
+		md:w-[20rem] md:block;
   }
 
   .main-container {
     @apply flex-1  transition-colors duration-300
-    bg-slate-200 dark:bg-ultramarine-900
-    flex flex-col gap-2;
+		bg-slate-200 dark:bg-dark-bg
+		flex flex-col gap-3;
   }
 }
 </style>

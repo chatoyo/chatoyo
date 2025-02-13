@@ -5,7 +5,7 @@ import { BaseChatMessage, ChatItem } from '@/models';
 import { fixedChatlog } from '@/services/chatlog-service';
 import { useChannelPageStore } from '@/store';
 import { onUnmounted, reactive, ref } from 'vue';
-import Cardio from '@components/profile-bar.vue';
+import ProfileBar from '@components/profile/profile-bar.vue';
 import Carousel from '@components/channel/carousel.vue';
 import BulletinBoardRecommend from '@components/channel/bulletin-board-recommend.vue';
 import NewsPanel from '@components/channel/news-panel.vue';
@@ -73,7 +73,7 @@ onUnmounted(() => {
     </div>
     <div v-else class="main-container sm:p-4 scrollable">
       <div class="cardio-container">
-        <Cardio />
+        <ProfileBar />
       </div>
       <div class="carousel-container">
         <Carousel class="carousel-wrapper" />

@@ -39,6 +39,14 @@ const mainRoutes: RouteRecordRaw = {
       meta: {
         title: '设置 - ChatoYo'
       }
+    },
+    {
+      component: () => import('@pages/main/profile.vue'),
+      name: 'profile',
+      path: 'profile',
+      meta: {
+        title: '个人资料 - ChatoYo'
+      }
     }
   ]
 };

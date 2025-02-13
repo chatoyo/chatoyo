@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { icon } from '@utils/transcript.ts';
-import { wrap } from 'module';
 import { computed, ref, watch } from 'vue';
 
 const current = ref<number>(0);

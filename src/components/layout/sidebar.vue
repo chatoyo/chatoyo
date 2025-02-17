@@ -53,11 +53,11 @@ const userInfo = computed(() => userStore.getUser);
 
 // Util
 const formattedSex = computed(() => {
-  switch (userInfo.value.sex) {
+  switch (userInfo.value.gender) {
     case 1:
-      return 'Female';
+      return '女';
     case 0:
-      return 'Male';
+      return '男';
     default:
       return ' ';
   }

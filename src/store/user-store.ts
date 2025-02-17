@@ -1,7 +1,7 @@
 
 import { BackendUser, LoginInfo } from '@/models/user';
 import { getJSON } from '@/request/main';
-import { defineStore, Store } from 'pinia';
+import { defineStore } from 'pinia';
 
 const defaultUserInfo : LoginInfo = {
   id: '-1',
@@ -53,6 +53,7 @@ export const requestUserInfo = async (userStore: unknown) => {
   const { user } = data as { user?: BackendUser };
 
   if (!user) {
+    userStore.clearUserInfo();
     throw new Error('Oops! User have to manually login.'); // Error handled on top
   }
   const store = userStore ?? useUserStore();

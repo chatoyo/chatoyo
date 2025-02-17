@@ -165,7 +165,7 @@ const hasDivider = (time: number | undefined, index: number) => {
   }
 
   .message-box::-webkit-scrollbar {
-    @apply w-2 h-0 dark:bg-ultramarine-900 bg-slate-200;
+    @apply w-2 h-0 dark:bg-dark-bg bg-slate-200;
   }
 
   .message-box::-webkit-scrollbar-thumb {
@@ -232,7 +232,7 @@ const hasDivider = (time: number | undefined, index: number) => {
   }
 
   .input-mask {
-    @apply absolute bottom-0 left-0 w-[calc(100%-0.5rem)] h-28 pointer-events-none to-transparent dark:bg-gradient-to-t dark:from-ultramarine-900 dark:via-ultramarine-900/80 opacity-0 dark:opacity-100 transition-opacity duration-300;
+    @apply absolute bottom-0 left-0 w-[calc(100%-0.5rem)] h-28 pointer-events-none to-transparent dark:bg-gradient-to-t dark:from-dark-bg dark:via-dark-bg/80 opacity-0 dark:opacity-100 transition-opacity duration-300;
   }
 
   .input-mask-dark {

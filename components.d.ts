@@ -10,7 +10,6 @@ declare module 'vue' {
     Achievement: typeof import('./src/components/home/achievement.vue')['default']
     Badge: typeof import('primevue/badge')['default']
     BulletinBoardRecommend: typeof import('./src/components/channel/bulletin-board-recommend.vue')['default']
-    Button: typeof import('primevue/button')['default']
     Cardio: typeof import('./src/components/profile/cardio.vue')['default']
     Carousel: typeof import('./src/components/channel/carousel.vue')['default']
     ChatsList: typeof import('./src/components/chats-list/chats-list.vue')['default']

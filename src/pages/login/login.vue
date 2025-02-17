@@ -42,10 +42,8 @@ const handleClickGithub = () => {
 onMounted(async () => {
   try {
     const userStore = useUserStore();
-    if(!userStore.getAuthenticated) {
-      await requestUserInfo(userStore);
-    }
-    redirect('home'); // redirects to home page
+    await requestUserInfo(userStore);
+    if(userStore.getAuthenticated) redirect('home'); // redirects to home page
   } 
   catch (error) {
     console.error(`Error requesting UserInfo: [${error}].\n It may be normal if it's the first time you log in this app.'`);

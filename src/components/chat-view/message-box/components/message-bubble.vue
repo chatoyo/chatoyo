@@ -34,7 +34,7 @@
 
 .self-bubble {
 
-	@apply break-words text-wrap bg-blue-600 rounded-xl max-w-lg p-4 shadow-[0px_0px_10px_12px_slate-200] dark:shadow-ultramarine-700 transition-shadow duration-300 dark:duration-200 hover:shadow-[0px_0px_2px_1.5px_#8b8680] hover:dark:shadow-lightBlue-900 hover:duration-0;
+	@apply break-words text-wrap bg-blue-600 rounded-xl max-w-lg p-4 shadow-[0px_0px_10px_12px_slate-200] dark:shadow-dark-bg transition-shadow duration-300 dark:duration-200 hover:shadow-[0px_0px_2px_1.5px_#8b8680] hover:dark:shadow-lightBlue-900 hover:duration-0;
 
 	&::before{
         @apply right-10 top-3 content-[''] absolute w-0 h-0 !border-l-blue-600;
@@ -50,7 +50,7 @@
 
 .other-bubble {
 
-	@apply break-words text-wrap bg-purple-50 border border-gray-200 rounded-xl max-w-lg p-4 space-y-3 shadow-[0px_0px_10px_12px_slate-200] dark:shadow-ultramarine-700 transition-shadow duration-300 dark:duration-200 hover:shadow-[0px_0px_2px_3px_lightgrey] hover:dark:shadow-gray-500 hover:duration-0;
+	@apply break-words text-wrap bg-purple-50 border border-gray-200 rounded-xl max-w-lg p-4 space-y-3 shadow-[0px_0px_10px_12px_slate-200] dark:shadow-dark-bg transition-shadow duration-300 dark:duration-200 hover:shadow-[0px_0px_2px_3px_lightgrey] hover:dark:shadow-gray-500 hover:duration-0;
 
 	&::after{
         @apply left-10 top-3 content-[''] absolute w-0 h-0 !border-r-purple-50;

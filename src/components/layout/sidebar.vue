@@ -48,23 +48,24 @@ const handleClick = (target: string) => {
 };
 
 // User
-const userInfo = useUserStore().getUser;
+const userStore = useUserStore();
+const userInfo = computed(() => userStore.getUser);
 
 // Util
 const formattedSex = computed(() => {
-  switch (userInfo.sex) {
-    case 0:
-      return 'Female';
+  switch (userInfo.value.gender) {
     case 1:
-      return 'Male';
+      return '女';
+    case 0:
+      return '男';
     default:
       return ' ';
   }
 });
 
 const formattedLoginTime = computed(() => {
-  if (userInfo.latestLoginAt === 0) return '请登录';
-  const loginTime = formatEpochTime(userInfo.latestLoginAt);
+  if (userInfo.value.latestLoginAt === 0) return '请登录';
+  const loginTime = formatEpochTime(userInfo.value.latestLoginAt);
   return loginTime;
 });
 </script>
@@ -72,7 +73,7 @@ const formattedLoginTime = computed(() => {
 <template>
   <transition name="fade" :duration="{ enter: 200, leave: 300 }">
     <div class="login-card" v-show="showCardio" @mouseenter="handleHoverAvatar" @mouseleave="handleLeaveAvatar">
-      <img :src="userInfo.avatar" alt="Avatar" class="login-card__avatar" />
+      <img :src="userInfo.picture" alt="Avatar" class="login-card__avatar" />
       <div class="login-card__content">
         <h3 class="login-card__name">{{ userInfo.name }}</h3>
         <p class="login-card__sex">{{ formattedSex }}</p>
@@ -97,7 +98,7 @@ const formattedLoginTime = computed(() => {
           }
         "
       >
-        <img class="avatar-img" :src="userInfo.avatar" alt="avatar-test.jpg" />
+        <img class="avatar-img" :src="userInfo.picture" alt="avatar-test.jpg" />
       </div>
     </div>
 

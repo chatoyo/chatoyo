@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import googleIcon from '@assets/img/google.png';
+import githubIcon from '@assets/img/github-mark.png';
 import { onMounted, ref } from 'vue';
-import { useUserStore } from '@/store';
+import { requestUserInfo, useUserStore } from '@/store';
 import { getJSON } from '@/request/main';
+import UserIcon from '@/assets/svgs/UserIcon.vue';
+import PasswordIcon from '@/assets/svgs/PasswordIcon.vue';
 
 const router = useRouter();
 
@@ -23,54 +26,36 @@ const loginHandler = () => {
 };
 
 const isLogging = ref(true);
+const isHoverOverGoogle = ref(false);
 const handleClickGoogle = () => {
   window.location.href = '/api/auth/google';
 }
-
-type GoogleUserInfo = {
-    sub: string,
-    name: string,
-    given_name: string,
-    family_name: string,
-    picture: string, // url
-    email: string,
-    email_verified: boolean
+const isHoverOverGithub = ref(false);
+const handleClickGithub = () => {
+  window.location.href = '/api/auth/github';
 }
-
+/**
+ * on Mounted, check if user info exist by requesting.
+ * If yes (which uses the JWT Token in cookies: authToken), redirect to home page after setting userInfo in the Info store.
+ * If no, stay in the current page.
+ */
 onMounted(async () => {
   try {
-    const { data } = await getJSON({
-      url: '/api/user/userInfo',
-    });
-
-    const { user_info: userInfo } = data as { user_info?: GoogleUserInfo };
-
-    if (!userInfo) {
-      throw new Error('Parsing failed: user_info is undefined');
-    }
-
     const userStore = useUserStore();
-    userStore.setUserInfo({
-      id: Number(userInfo.sub),
-      name: userInfo.name,
-      sex: 1,
-      avatar: userInfo.picture,
-      latestLoginAt: Date.now(),
-    });
-
-    redirect('home');
-  } catch (error) {
-    console.error('Error Parsing User Info:', error);
-  } finally {
+    await requestUserInfo(userStore);
+    if(userStore.getAuthenticated) redirect('home'); // redirects to home page
+  } 
+  catch (error) {
+    console.error(`Error requesting UserInfo: [${error}].\n It may be normal if it's the first time you log in this app.'`);
     isLogging.value = false;
-  }
+  } 
 });
 </script>
 
 <template>
   <div class="login-page">
     <div class="form">
-      <span class="title">chatoyo </span>
+      <span class="title">chatoyo</span>
       <form class="form-core">
         <div class="relative">
           <input
@@ -81,21 +66,7 @@ onMounted(async () => {
           <div
             class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none"
           >
-            <svg
-              class="shrink-0 size-4 text-gray-500"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
+          <UserIcon/>
           </div>
         </div>
 
@@ -108,27 +79,21 @@ onMounted(async () => {
           <div
             class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none"
           >
-            <svg
-              class="shrink-0 size-4 text-gray-500"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z"></path>
-              <circle cx="16.5" cy="7.5" r=".5"></circle>
-            </svg>
+            <PasswordIcon/>
           </div>
         </div>
       </form>
-      <div class="btn btn-google" @click="handleClickGoogle">
-        <img :src="googleIcon"/>
-        <span>通过 Google 登陆</span>
+      <div class="btn btn-oauth" @click="handleClickGoogle" 
+      @mouseenter="() => {isHoverOverGoogle = true}" @mouseleave="() => {isHoverOverGoogle = false}">
+        <img v-if="!isHoverOverGoogle" :src="googleIcon" class="btn-oauth__icon image-form"/>
+        <span v-else class="btn-oauth__icon clip-form google-mask"> </span>
+        <span class="btn-oauth__text">通过 Google 登陆</span>
+      </div>
+      <div class="btn btn-oauth" @click="handleClickGithub" 
+      @mouseenter="() => {isHoverOverGithub = true}" @mouseleave="() => {isHoverOverGithub = false}">
+        <img v-if="!isHoverOverGithub" :src="githubIcon" class="btn-oauth__icon image-form"/>
+        <span v-else class="btn-oauth__icon clip-form github-mask"> </span>
+        <span class="btn-oauth__text">通过 Github 登陆</span>
       </div>
       <div class="submit-btn">
         <button type="submit" class="btn btn-login" @click="loginHandler">
@@ -141,7 +106,7 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 @tailwind components;
 @layer components {
   .login-page {
@@ -166,7 +131,7 @@ onMounted(async () => {
   }
 
   .btn {
-    @apply w-full inline-flex justify-center duration-300 gap-3 text-sm items-center font-medium rounded-lg;
+    @apply w-full inline-flex justify-center duration-300 gap-3 text-sm items-center font-medium rounded-lg cursor-pointer;
   }
 
   .btn-login {
@@ -185,13 +150,48 @@ onMounted(async () => {
 		disabled:opacity-50 disabled:pointer-events-none;
   }
 
-  .btn-google{
-      @apply w-full h-11 flex items-center justify-start gap-6 mt-6 
-      bg-lightBlue-100 border-2 border-slate-200 rounded-lg
-      text-slate-600 hover:bg-lightBlue-300;
-      img {
-        @apply h-[72%] ml-4;
+  .btn-oauth{
+      @apply w-full h-11 flex items-center justify-start gap-6 mt-6 relative
+      bg-lightBlue-100 border-2 border-slate-200 rounded-lg hover:text-transparent hover:font-extrabold transition-colors duration-300
+      text-slate-600 hover:bg-[linear-gradient(90deg,rgba(44,44,44,0.2)_0%,rgba(44,44,44,0.2)_45%,rgba(255,255,255,1)_50%,rgba(44,44,44,0.2)_55%,rgba(44,44,44,0.2)_100%);];
+      &:hover{
+        background-size: 300% 300%;
+        animation: 3s gradient 500ms ease infinite;
+        background-clip: text;
       }
+
+      &__icon {
+        @apply h-8 w-8 ml-4 z-10;
+        &.clip-form {
+          @apply bg-lightBlue-100;
+          mask-size: cover; /* Adjust size if needed */
+          mask-repeat: no-repeat;
+          mask-position: center;
+          animation: appear 0.3s ease;
+          &.google-mask{
+            mask-image: url('@assets/img/google.png');
+          }
+          &.github-mask{
+            mask-image: url('@assets/img/github-mark.png');
+          }
+        }
+      }
+  }
+}
+@keyframes gradient {
+  0% {
+    background-position: 70% 50%;
+  }
+  100% {
+    background-position: 30% 50%;
+  }
+}
+@keyframes appear {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
   }
 }
 </style>
